@@ -1,6 +1,6 @@
 # PianoPop
 
-Free Hebrew (RTL) web app for learning piano. Full dev requirements: `docs/requirements.md` — read only the section you need. Product spec (human-facing, Word): `docs/spec/` — do not open the .docx unless asked; requirements.md already reflects it.
+Free Hebrew (RTL) web app for learning piano. Full dev requirements: `docs/requirements.md`; code structure and layers: `docs/architecture.md` — read only the section you need. Product spec (human-facing, Word): `docs/spec/` — do not open the .docx unless asked; requirements.md already reflects it.
 
 ## Working rules
 - Reply to the user in Hebrew.
