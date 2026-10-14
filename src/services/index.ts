@@ -1,2 +1,3 @@
 // Public API of src/services — see docs/architecture.md §2.
-export {};
+export { audio, createToneAudioService } from './audio';
+export type { AudioService, AudioState, SequenceNote } from './audio';

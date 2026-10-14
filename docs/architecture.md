@@ -96,7 +96,7 @@ Exercise components hold only transient UI state; nothing in them decides pass/f
 
 ## 5. Audio & timing **[ARCH]**
 - One `AudioService` singleton wrapping Tone.js; `start()` is called from the "התחילו" click.
-- Samples: subset of Salamander (every 3rd note, Tone.Sampler pitch-shifts the rest), mp3 + ogg, lazy-loaded after start; show a loading state.
+- Samples: subset of Salamander (every 3rd note A0–C8, Tone.Sampler pitch-shifts the rest), mp3 only (~2 MB; all target browsers decode mp3, ogg was 3× larger), loaded after start; show a loading state (`AudioService.state`). Tone.js is code-split; call `audio.preload()` early so `start()` stays inside the gesture.
 - Single clock: `AudioService.now()` (Tone context time). `PianoInput` stamps events with it at the moment of the DOM event.
 - Rhythm judge compares `tap.t − latencyOffset` to scheduled beat times; pure function in `engine/rhythm.ts`.
 
