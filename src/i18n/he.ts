@@ -21,9 +21,7 @@ export const he = {
     loading: 'טוענים צלילים…',
     blocked: 'הדפדפן חסם את הצליל. לחצו שוב על "התחילו".',
   },
-  pressKey: {
-    title: 'מוצאים את הקליד',
-    prompt: (note: string) => `לחצו על ${note}`,
+  exercise: {
     progress: (n: number, total: number) => `שאלה ${n} מתוך ${total}`,
     correct: 'נכון!',
     wrong: 'לא בדיוק, נסו שוב',
@@ -32,6 +30,17 @@ export const he = {
     passed: 'עברתם את התרגיל',
     failed: 'כמעט! אפשר לנסות שוב',
     retry: 'לנסות שוב',
+  },
+  pressKey: {
+    title: 'מוצאים את הקליד',
+    prompt: (note: string) => `לחצו על ${note}`,
+  },
+  staff: {
+    label: 'חמשה',
+  },
+  readNote: {
+    title: 'קוראים תווים',
+    prompt: 'לחצו על התו שעל החמשה',
   },
   notes: {
     solfege: ['דו', 'רה', 'מי', 'פה', 'סול', 'לה', 'סי'],

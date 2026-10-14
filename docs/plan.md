@@ -3,7 +3,7 @@
 Working document. Each task = one focused session. Update status here at the end of every task.
 Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner decision.
 
-**Current task:** M2.1
+**Current task:** M2.2
 
 ## How to run a task (token protocol)
 1. Read only: this file's current task + the doc sections it lists under **Refs**. Nothing else up front.
@@ -47,7 +47,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 - [x] **D.2** Encode the chosen direction as Tailwind tokens + base components (Button, Card, Dialog, ProgressBar). Restyle Piano/PressKey.
 
 ## M2 – Exercise engine
-- [ ] **M2.1** `ui/components/Staff` (VexFlow, treble, highlight, Hebrew label overlay) + `ReadNote`.
+- [x] **M2.1** `ui/components/Staff` (VexFlow, treble, highlight, Hebrew label overlay) + `ReadNote`.
 - [ ] **M2.2** `PlaySequence` + `HigherLower`.
 - [ ] **M2.3** `engine/rhythm.ts` + tests; calibration wizard (`settingsStore.latencyOffsetMs`); `TapRhythm`.
 - [ ] **M2.4** `HintMenu` (short hint / explanation / replay demo; ear-exercise rule D-23) wired into scoring; demo playback animation.
@@ -93,3 +93,4 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 - 14.10.2026 — Docs, permissions, architecture, plan. Penalized score compared to threshold (approved).
 - 14.10.2026 — D.1: design direction chosen (B layout + A palette, no note colors, Varela Round); recorded in requirements §4.
 - 14.10.2026 — D.2: tokens in `src/index.css` (@theme), Varela Round self-hosted (@fontsource), base Button/Card/Dialog/ProgressBar; Piano, PressKey, AudioGate, FeedbackBanner restyled.
+- 14.10.2026 — M2.1: Staff (VexFlow 5 bravura, lazy chunk, currentColor + data-tone, HTML label overlay), engine/readNote (exact pitch) on shared engine/questionSet, ReadNote + useQuestionSet hook, /demo/read-note. read-note rules approved → requirements §6.

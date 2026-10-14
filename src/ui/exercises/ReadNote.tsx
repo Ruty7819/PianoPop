@@ -1,0 +1,84 @@
+import { useMemo } from 'react';
+import type { ReadNoteDef } from '../../content';
+import {
+  noteLabel,
+  readNoteAnswer,
+  readNotePianoStart,
+  readNoteScore,
+  type AttemptResult,
+  type Midi,
+  type NoteNaming,
+} from '../../engine';
+import { he } from '../../i18n/he';
+import type { PianoInput } from '../../services/input';
+import { FeedbackBanner } from '../components/FeedbackBanner';
+import { Piano, type KeyHighlight, type PianoAudio } from '../components/Piano';
+import { Staff, type StaffNote } from '../components/Staff';
+import { ExerciseProgress } from './ExerciseProgress';
+import { ExerciseSummary } from './ExerciseSummary';
+import { useQuestionSet } from './useQuestionSet';
+
+const RULES = { answer: readNoteAnswer, score: readNoteScore };
+
+interface Props {
+  def: ReadNoteDef;
+  input: PianoInput;
+  audio: PianoAudio;
+  onDone?: (result: AttemptResult) => void;
+  naming?: NoteNaming;
+  octaves?: number;
+}
+
+/** "Read the note on the staff and play it" (requirements §6); rules in engine/readNote. */
+export function ReadNote({ def, input, audio, onDone, naming = 'solfege', octaves }: Props) {
+  const { state, flash, result, restart } = useQuestionSet(
+    def.id,
+    def.questions,
+    input,
+    RULES,
+    onDone,
+  );
+  const startMidi = useMemo(() => readNotePianoStart(def.questions), [def.questions]);
+
+  // A correct press advances at once; keep the answered note on screen while it flashes.
+  const answered = flash?.correct ? def.questions[state.index - 1] : undefined;
+  const shown = answered ?? def.questions[state.index];
+
+  // Name appears only after an answer; a miss also marks the right key (approved 14.10.2026).
+  const staffNote: StaffNote | undefined =
+    shown === undefined
+      ? undefined
+      : answered !== undefined
+        ? { midi: shown, tone: 'correct', label: noteLabel(shown, { naming }) }
+        : state.missed
+          ? { midi: shown, tone: 'target', label: noteLabel(shown, { naming }) }
+          : { midi: shown };
+
+  const highlights: Partial<Record<Midi, KeyHighlight>> = {};
+  if (state.missed && shown !== undefined) highlights[shown] = 'target';
+  if (flash) highlights[flash.midi] = flash.correct ? 'correct' : 'wrong';
+
+  return (
+    <section className="flex flex-col gap-4">
+      {result ? (
+        <ExerciseSummary result={result} onRetry={restart} />
+      ) : (
+        <>
+          <ExerciseProgress index={state.index} total={def.questions.length} />
+          <h2 className="text-center text-2xl font-bold">{he.readNote.prompt}</h2>
+          {staffNote && <Staff notes={[staffNote]} clef={def.clef} />}
+          <FeedbackBanner tone={flash ? (flash.correct ? 'correct' : 'wrong') : 'neutral'}>
+            {flash ? (flash.correct ? he.exercise.correct : he.exercise.wrong) : ' '}
+          </FeedbackBanner>
+        </>
+      )}
+      <Piano
+        input={input}
+        audio={audio}
+        highlights={highlights}
+        octaves={octaves}
+        startMidi={startMidi}
+      />
+    </section>
+  );
+}

@@ -28,3 +28,14 @@ export {
   pressKeyAnswer,
   pressKeyScore,
 } from './pressKey';
+export type { QuestionSetState } from './questionSet';
+export { questionSetStart, questionSetDone } from './questionSet';
+export type { ReadNoteState } from './readNote';
+export {
+  isReadNoteMatch,
+  readNoteStart,
+  readNoteDone,
+  readNoteAnswer,
+  readNoteScore,
+  readNotePianoStart,
+} from './readNote';

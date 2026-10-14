@@ -1,11 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
 import type { PressKeyDef } from '../../content';
 import {
   noteLabel,
   pressKeyAnswer,
-  pressKeyDone,
   pressKeyScore,
-  pressKeyStart,
   type AttemptResult,
   type Midi,
   type NoteNaming,
@@ -13,11 +10,12 @@ import {
 import { he } from '../../i18n/he';
 import type { PianoInput } from '../../services/input';
 import { FeedbackBanner } from '../components/FeedbackBanner';
-import { ProgressBar } from '../components/ProgressBar';
 import { Piano, type KeyHighlight, type PianoAudio } from '../components/Piano';
-import { PressKeySummary } from './PressKeySummary';
+import { ExerciseProgress } from './ExerciseProgress';
+import { ExerciseSummary } from './ExerciseSummary';
+import { useQuestionSet } from './useQuestionSet';
 
-const FLASH_MS = 700;
+const RULES = { answer: pressKeyAnswer, score: pressKeyScore };
 
 interface Props {
   def: PressKeyDef;
@@ -31,57 +29,13 @@ interface Props {
 
 /** "Press the named key" (requirements §6); rules live in engine/pressKey. */
 export function PressKey({ def, input, audio, onDone, naming = 'solfege', ...piano }: Props) {
-  const [state, setState] = useState(pressKeyStart);
-  const [flash, setFlash] = useState<{ midi: Midi; correct: boolean } | null>(null);
-  const [startedAt, setStartedAt] = useState(() => new Date().toISOString());
-  const stateRef = useRef(state);
-  const done = pressKeyDone(state, def.questions);
-
-  useEffect(
-    () =>
-      input.subscribe(({ midi, on }) => {
-        if (!on) return;
-        const r = pressKeyAnswer(stateRef.current, def.questions, midi);
-        if (r.state === stateRef.current) return;
-        stateRef.current = r.state;
-        setState(r.state);
-        setFlash({ midi, correct: r.correct });
-      }),
-    [input, def.questions],
+  const { state, flash, result, restart } = useQuestionSet(
+    def.id,
+    def.questions,
+    input,
+    RULES,
+    onDone,
   );
-
-  useEffect(() => {
-    if (!flash) return;
-    const id = setTimeout(() => setFlash(null), FLASH_MS);
-    return () => clearTimeout(id);
-  }, [flash]);
-
-  const result = useMemo<AttemptResult | null>(
-    () =>
-      done
-        ? {
-            exerciseId: def.id,
-            hintsUsed: 0,
-            ...pressKeyScore(state, 0),
-            details: { firstTry: state.results },
-            startedAt,
-            finishedAt: new Date().toISOString(),
-          }
-        : null,
-    [done, def.id, state, startedAt],
-  );
-
-  useEffect(() => {
-    if (result) onDone?.(result);
-  }, [result, onDone]);
-
-  const restart = () => {
-    stateRef.current = pressKeyStart();
-    setState(stateRef.current);
-    setFlash(null);
-    setStartedAt(new Date().toISOString());
-  };
-
   const target = def.questions[state.index];
   const highlights: Partial<Record<Midi, KeyHighlight>> = flash
     ? { [flash.midi]: flash.correct ? 'correct' : 'wrong' }
@@ -90,22 +44,15 @@ export function PressKey({ def, input, audio, onDone, naming = 'solfege', ...pia
   return (
     <section className="flex flex-col gap-4">
       {result ? (
-        <PressKeySummary result={result} onRetry={restart} />
+        <ExerciseSummary result={result} onRetry={restart} />
       ) : (
         <>
-          <div className="grid gap-1 text-sm text-muted">
-            <span>{he.pressKey.progress(state.index + 1, def.questions.length)}</span>
-            <ProgressBar
-              value={state.index}
-              max={def.questions.length}
-              label={he.pressKey.progress(state.index + 1, def.questions.length)}
-            />
-          </div>
+          <ExerciseProgress index={state.index} total={def.questions.length} />
           <h2 className="text-center text-4xl font-bold">
             {target !== undefined && he.pressKey.prompt(noteLabel(target, { naming }))}
           </h2>
           <FeedbackBanner tone={flash ? (flash.correct ? 'correct' : 'wrong') : 'neutral'}>
-            {flash ? (flash.correct ? he.pressKey.correct : he.pressKey.wrong) : ' '}
+            {flash ? (flash.correct ? he.exercise.correct : he.exercise.wrong) : ' '}
           </FeedbackBanner>
         </>
       )}

@@ -34,7 +34,7 @@ describe('PressKey', () => {
     const { press } = setup();
     expect(screen.getByRole('heading')).toHaveTextContent(he.pressKey.prompt('דו'));
     press(48);
-    expect(screen.getByRole('status')).toHaveTextContent(he.pressKey.correct);
+    expect(screen.getByRole('status')).toHaveTextContent(he.exercise.correct);
     expect(screen.getByRole('heading')).toHaveTextContent(he.pressKey.prompt('רה'));
     expect(document.querySelector('[data-midi="48"]')).toHaveAttribute('data-highlight', 'correct');
   });
@@ -42,7 +42,7 @@ describe('PressKey', () => {
   it('stays on the question after a wrong press', () => {
     const { press } = setup();
     press(61);
-    expect(screen.getByRole('status')).toHaveTextContent(he.pressKey.wrong);
+    expect(screen.getByRole('status')).toHaveTextContent(he.exercise.wrong);
     expect(screen.getByRole('heading')).toHaveTextContent(he.pressKey.prompt('דו'));
   });
 
@@ -60,8 +60,8 @@ describe('PressKey', () => {
       passed: true,
       hintsUsed: 0,
     });
-    expect(screen.getByRole('status')).toHaveTextContent(he.pressKey.score(80));
-    fireEvent.click(screen.getByRole('button', { name: he.pressKey.retry }));
+    expect(screen.getByRole('status')).toHaveTextContent(he.exercise.score(80));
+    fireEvent.click(screen.getByRole('button', { name: he.exercise.retry }));
     expect(screen.getByRole('heading')).toHaveTextContent(he.pressKey.prompt('דו'));
   });
 });
