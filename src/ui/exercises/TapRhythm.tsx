@@ -15,21 +15,12 @@ import {
 import { he } from '../../i18n/he';
 import type { AudioService } from '../../services/audio';
 import { Button } from '../components/Button';
-import { FeedbackBanner } from '../components/FeedbackBanner';
 import { TapPad } from '../components/TapPad';
 import { ExerciseSummary } from './ExerciseSummary';
 import { RhythmBar } from './RhythmBar';
-
-/** Lead-in before the demo (s) and the note that plays the pattern. */
-export const TR_TIMING = { lead: 0.4, note: 72, noteDur: 0.2 };
-
-type Phase = 'ready' | 'demo' | 'count' | 'tap' | 'done';
-
-const TIMING_TEXT: Record<TapTiming, string> = {
-  early: he.tapRhythm.early,
-  'on-time': he.tapRhythm.onTime,
-  late: he.tapRhythm.late,
-};
+import { TR_TIMING } from './tapRhythmTiming';
+import { RhythmStage, type RhythmPhase } from './RhythmStage';
+import { useAudioClock } from '../hooks/useAudioClock';
 
 interface Props {
   def: TapRhythmDef;
@@ -40,7 +31,7 @@ interface Props {
 
 /** Demo → count-in → tap along (requirements §6, approved 14.10.2026). */
 export function TapRhythm({ def, audio, latencyOffsetMs, onDone }: Props) {
-  const [phase, setPhase] = useState<Phase>('ready');
+  const [phase, setPhase] = useState<RhythmPhase>('ready');
   const [tl, setTl] = useState<RhythmTimeline | null>(null);
   const [last, setLast] = useState<TapTiming | null>(null);
   const [judged, setJudged] = useState<RhythmJudgement | null>(null);
@@ -112,30 +103,27 @@ export function TapRhythm({ def, audio, latencyOffsetMs, onDone }: Props) {
   };
   const bars = tl?.bars ?? rhythmTimeline(def.bpm, def.pattern, 0).bars;
   const tapping = phase === 'count' || phase === 'tap';
-  const status =
-    phase === 'demo'
-      ? he.tapRhythm.demo
-      : phase === 'count'
-        ? he.tapRhythm.countIn
-        : phase === 'tap'
-          ? last
-            ? TIMING_TEXT[last]
-            : he.tapRhythm.go
-          : ' ';
+  const t = useAudioClock(now, phase === 'demo' || tapping);
+  const spb = 60 / def.bpm;
+  const playhead =
+    tl && phase === 'demo'
+      ? (t - tl.demoClicks[0]!) / spb
+      : tl && phase === 'tap'
+        ? (t - tl.tapStart) / spb
+        : null;
 
   return (
     <section className="flex flex-col gap-6">
-      <RhythmBar pattern={def.pattern} bars={bars} results={judged?.beats} />
+      <RhythmStage phase={phase} tl={tl} t={t} last={last} judged={judged} />
+      <RhythmBar pattern={def.pattern} bars={bars} playhead={playhead} results={judged?.beats} />
       {result ? (
         <ExerciseSummary result={result} onRetry={retry} />
-      ) : phase === 'ready' ? (
-        <Button variant="primary" className="self-center" onClick={start}>
-          {he.tapRhythm.start}
-        </Button>
       ) : (
-        <FeedbackBanner tone={phase === 'tap' && last === 'on-time' ? 'correct' : 'neutral'}>
-          {status}
-        </FeedbackBanner>
+        phase === 'ready' && (
+          <Button variant="primary" className="self-center" onClick={start}>
+            {he.tapRhythm.start}
+          </Button>
+        )
       )}
       {!result && <TapPad onTap={onTap} now={now} disabled={!tapping} />}
     </section>

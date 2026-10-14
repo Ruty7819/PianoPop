@@ -1,2 +1,3 @@
-export { CalibrationWizard, CALIBRATION } from './CalibrationWizard';
+export { CalibrationWizard } from './CalibrationWizard';
+export { CALIBRATION } from './calibrationTiming';
 export { CalibrationGate } from './CalibrationGate';

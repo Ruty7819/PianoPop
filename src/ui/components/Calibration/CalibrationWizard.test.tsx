@@ -1,7 +1,8 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { he } from '../../../i18n/he';
-import { CALIBRATION, CalibrationWizard } from './CalibrationWizard';
+import { CALIBRATION } from './calibrationTiming';
+import { CalibrationWizard } from './CalibrationWizard';
 
 const SPB = 60 / CALIBRATION.bpm;
 

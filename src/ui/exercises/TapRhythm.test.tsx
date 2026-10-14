@@ -2,7 +2,8 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { TapRhythmDef } from '../../content';
 import { he } from '../../i18n/he';
-import { TapRhythm, TR_TIMING } from './TapRhythm';
+import { TapRhythm } from './TapRhythm';
+import { TR_TIMING } from './tapRhythmTiming';
 
 // 60 bpm → 1 s per beat; one bar.
 const DEF: TapRhythmDef = {
@@ -23,8 +24,10 @@ function setup(latencyOffsetMs = 0) {
   const wait = (s: number) => act(() => vi.advanceTimersByTime(s * 1000));
   const tap = () => fireEvent.keyDown(window, { code: 'Space' });
   const pad = () => screen.getByRole('button', { name: he.tapRhythm.tapHint });
+  const count = () => document.querySelector('[data-count]')?.textContent;
+  expect(screen.getByText(he.tapRhythm.intro)).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: he.tapRhythm.start }));
-  return { audio, onDone, wait, tap, pad };
+  return { audio, onDone, wait, tap, pad, count };
 }
 
 describe('TapRhythm', () => {
@@ -34,17 +37,32 @@ describe('TapRhythm', () => {
     expect(audio.playNote).toHaveBeenCalledTimes(4);
     expect(screen.getByText(he.tapRhythm.demo)).toBeInTheDocument();
     expect(pad()).toBeDisabled();
+    expect(screen.getByRole('listitem', { current: 'step' })).toHaveTextContent(
+      he.tapRhythm.steps[0],
+    );
+  });
+
+  it('moves the playhead over the dots during the demo', () => {
+    const { wait } = setup();
+    wait(TR_TIMING.lead + 1);
+    expect(document.querySelector('[data-playhead]')).not.toBeNull();
+    expect(document.querySelectorAll('[data-beat="active"]')).toHaveLength(1);
   });
 
   it('scores taps on the beat and shows feedback per tap', () => {
-    const { onDone, wait, tap, pad } = setup();
+    const { onDone, wait, tap, pad, count } = setup();
     wait(TR_TIMING.lead + 4);
-    expect(screen.getByText(he.tapRhythm.countIn)).toBeInTheDocument();
+    expect(count()).toBe('1');
     expect(pad()).toBeEnabled();
-    wait(4);
+    wait(3.05);
+    expect(count()).toBe('4');
+    wait(0.95);
     tap();
+    wait(0.05);
+    expect(count()).toBe(he.tapRhythm.go);
+    wait(1.05);
     expect(screen.getByText(he.tapRhythm.onTime)).toBeInTheDocument();
-    wait(1.15);
+    wait(0.05);
     tap();
     expect(screen.getByText(he.tapRhythm.late)).toBeInTheDocument();
     wait(0.85);
@@ -57,6 +75,7 @@ describe('TapRhythm', () => {
       passed: true,
     });
     expect(document.querySelectorAll('[data-beat="miss"]')).toHaveLength(1);
+    expect(screen.getByText(he.tapRhythm.result(3, 4))).toBeInTheDocument();
   });
 
   it('applies the latency offset', () => {
