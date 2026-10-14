@@ -13,12 +13,12 @@ interface Props {
 }
 
 const btn =
-  'min-h-11 min-w-11 rounded-lg border border-gray-300 bg-white px-2 disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-sky-600';
+  'min-h-11 min-w-11 rounded-full bg-surface px-2 text-muted hover:bg-line/50 disabled:opacity-40';
 
 /** Range arrows, volume + mute (D-14), key-letter toggle. Rendered LTR with the piano. */
 export function PianoBar(p: Props) {
   return (
-    <div className="flex flex-wrap items-center gap-2 pb-2">
+    <div className="flex flex-wrap items-center gap-2 pb-2 text-sm text-muted">
       <button
         type="button"
         className={btn}
@@ -53,13 +53,13 @@ export function PianoBar(p: Props) {
         step={0.05}
         value={p.volume}
         aria-label={he.piano.volume}
-        className="h-11 w-28"
+        className="h-11 w-28 accent-ink"
         onChange={(e) => p.onVolume(Number(e.target.value))}
       />
       <label className="ms-auto flex min-h-11 items-center gap-2" dir="rtl">
         <input
           type="checkbox"
-          className="size-5"
+          className="size-5 accent-ink"
           checked={p.showKeyLetters}
           onChange={(e) => p.onShowKeyLetters(e.target.checked)}
         />

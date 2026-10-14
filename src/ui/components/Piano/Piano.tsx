@@ -71,7 +71,7 @@ export function Piano({
       <div
         role="group"
         aria-label={he.piano.keyboard}
-        className="relative h-40 w-full touch-none sm:h-48"
+        className="relative h-40 w-full touch-none rounded-card border-x-8 border-b-8 border-ink bg-ink sm:h-48"
         onContextMenu={(e) => e.preventDefault()}
       >
         {keys.map((k) => (

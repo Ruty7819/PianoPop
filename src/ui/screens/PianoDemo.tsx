@@ -13,7 +13,7 @@ export function PianoDemo() {
       <AudioGate audio={audio}>
         <Piano input={pianoInput} audio={audio} highlights={{ 60: 'target' }} noteNames="solfege" />
       </AudioGate>
-      <Link className="mt-4 inline-block underline" to="/demo/press-key">
+      <Link className="mt-4 inline-block text-muted underline" to="/demo/press-key">
         {he.pressKey.title}
       </Link>
     </main>

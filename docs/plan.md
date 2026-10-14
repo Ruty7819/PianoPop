@@ -3,7 +3,7 @@
 Working document. Each task = one focused session. Update status here at the end of every task.
 Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner decision.
 
-**Current task:** D.2
+**Current task:** M2.1
 
 ## How to run a task (token protocol)
 1. Read only: this file's current task + the doc sections it lists under **Refs**. Nothing else up front.
@@ -44,7 +44,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 
 ## D – Design direction (owner decision)
 - [x] **D.1** Build 2–3 static design directions (home + exercise screen) as one HTML artifact; owner picks. Refs: requirements §4, D-40, D-66, D-79.
-- [ ] **D.2** Encode the chosen direction as Tailwind tokens + base components (Button, Card, Dialog, ProgressBar). Restyle Piano/PressKey.
+- [x] **D.2** Encode the chosen direction as Tailwind tokens + base components (Button, Card, Dialog, ProgressBar). Restyle Piano/PressKey.
 
 ## M2 – Exercise engine
 - [ ] **M2.1** `ui/components/Staff` (VexFlow, treble, highlight, Hebrew label overlay) + `ReadNote`.
@@ -92,3 +92,4 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 ## Log
 - 14.10.2026 — Docs, permissions, architecture, plan. Penalized score compared to threshold (approved).
 - 14.10.2026 — D.1: design direction chosen (B layout + A palette, no note colors, Varela Round); recorded in requirements §4.
+- 14.10.2026 — D.2: tokens in `src/index.css` (@theme), Varela Round self-hosted (@fontsource), base Button/Card/Dialog/ProgressBar; Piano, PressKey, AudioGate, FeedbackBanner restyled.

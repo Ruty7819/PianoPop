@@ -13,6 +13,7 @@ import {
 import { he } from '../../i18n/he';
 import type { PianoInput } from '../../services/input';
 import { FeedbackBanner } from '../components/FeedbackBanner';
+import { ProgressBar } from '../components/ProgressBar';
 import { Piano, type KeyHighlight, type PianoAudio } from '../components/Piano';
 import { PressKeySummary } from './PressKeySummary';
 
@@ -92,10 +93,15 @@ export function PressKey({ def, input, audio, onDone, naming = 'solfege', ...pia
         <PressKeySummary result={result} onRetry={restart} />
       ) : (
         <>
-          <p className="text-slate-600">
-            {he.pressKey.progress(state.index + 1, def.questions.length)}
-          </p>
-          <h2 className="text-3xl font-bold">
+          <div className="grid gap-1 text-sm text-muted">
+            <span>{he.pressKey.progress(state.index + 1, def.questions.length)}</span>
+            <ProgressBar
+              value={state.index}
+              max={def.questions.length}
+              label={he.pressKey.progress(state.index + 1, def.questions.length)}
+            />
+          </div>
+          <h2 className="text-center text-4xl font-bold">
             {target !== undefined && he.pressKey.prompt(noteLabel(target, { naming }))}
           </h2>
           <FeedbackBanner tone={flash ? (flash.correct ? 'correct' : 'wrong') : 'neutral'}>

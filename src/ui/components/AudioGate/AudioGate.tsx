@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { he } from '../../../i18n/he';
 import type { AudioService, AudioState } from '../../../services/audio';
+import { Button } from '../Button';
 
 type GateAudio = Pick<AudioService, 'state' | 'preload' | 'start' | 'subscribe'>;
 
@@ -16,16 +17,11 @@ export function AudioGate({ audio, children }: { audio: GateAudio; children: Rea
   const busy = state === 'starting' || state === 'loading';
   return (
     <div className="flex flex-col items-start gap-2">
-      <button
-        type="button"
-        className="min-h-11 rounded-lg bg-sky-600 px-6 text-lg text-white disabled:opacity-50"
-        disabled={busy}
-        onClick={() => void audio.start()}
-      >
+      <Button variant="primary" disabled={busy} onClick={() => void audio.start()}>
         {he.demo.start}
-      </button>
-      {busy && <p>{he.demo.loading}</p>}
-      {state === 'blocked' && <p className="text-red-700">{he.demo.blocked}</p>}
+      </Button>
+      {busy && <p className="text-muted">{he.demo.loading}</p>}
+      {state === 'blocked' && <p className="text-wrong-text">{he.demo.blocked}</p>}
     </div>
   );
 }
