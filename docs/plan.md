@@ -3,7 +3,7 @@
 Working document. Each task = one focused session. Update status here at the end of every task.
 Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner decision.
 
-**Current task:** D.1
+**Current task:** D.2
 
 ## How to run a task (token protocol)
 1. Read only: this file's current task + the doc sections it lists under **Refs**. Nothing else up front.
@@ -43,7 +43,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
   Done (M1): on a real phone and desktop, play notes (mouse/touch/keyboard, Hebrew layout), finish a 10-question press-key set with correct score. Owner checks audio latency feel.
 
 ## D – Design direction (owner decision)
-- [?] **D.1** Build 2–3 static design directions (home + exercise screen) as one HTML artifact; owner picks. Refs: requirements §4, D-40, D-66, D-79.
+- [x] **D.1** Build 2–3 static design directions (home + exercise screen) as one HTML artifact; owner picks. Refs: requirements §4, D-40, D-66, D-79.
 - [ ] **D.2** Encode the chosen direction as Tailwind tokens + base components (Button, Card, Dialog, ProgressBar). Restyle Piano/PressKey.
 
 ## M2 – Exercise engine
@@ -87,7 +87,8 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 ---
 
 ## Owner decisions pending
-- D.1 design direction · M3.3 unit 1 outline approval · M4.0 Supabase/Google setup · domain (spec פ-17) · name availability (פ-16א).
+- M3.3 unit 1 outline approval · M4.0 Supabase/Google setup · domain (spec פ-17) · name availability (פ-16א).
 
 ## Log
 - 14.10.2026 — Docs, permissions, architecture, plan. Penalized score compared to threshold (approved).
+- 14.10.2026 — D.1: design direction chosen (B layout + A palette, no note colors, Varela Round); recorded in requirements §4.

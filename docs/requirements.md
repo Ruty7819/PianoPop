@@ -30,6 +30,7 @@ Out: external MIDI piano, narration, sustain pedal, goals/achievements/points, p
 - Explanations are skippable by everyone (D-21); skipping never skips exercises.
 - Hints only on request (D-25); user chooses hint type (D-22); full explanation available directly (D-24).
 - No gamification: no points, badges, streak pressure, notifications (D-43, D-47).
+- Visual direction (approved 14.10.2026, plan D.1): layout/shape of direction "B" + palette of direction "A"; no per-note colors. Font: Varela Round (all text, fallback Rubik/Arial). Rounded shapes (radius ~18px cards/buttons, ~10px piano keys), white UI with soft surfaces, lesson card with step bar, one primary button. Palette: ink `#1c2742` (text, primary button, piano case), muted `#5d6680`, background `#f6f7f9`, surface `#ffffff`, line `#d5dae4`; key states: target brass `#c99a2e`, correct `#2d7a57`, wrong `#b8463c`, demo `#6f8fd0`. Reference mockup: https://claude.ai/artifact/MtRjXLihCxineiHnGKdrem
 - Accessibility target WCAG 2.2 AA **[REC]** (D-42 open): full keyboard operation, visible focus, every sound-based feedback also shown visually, `prefers-reduced-motion` respected, touch targets ≥ 44px, contrast AA.
 
 ## 5. On-screen piano
