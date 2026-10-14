@@ -10,6 +10,8 @@ interface Props {
   noteText?: string;
   /** Mapped computer-key letter (optional). */
   keyText?: string;
+  /** Middle C orientation dot. */
+  marker?: boolean;
   onDown: (pointerId: number) => void;
   onEnter: (pointerId: number) => void;
 }
@@ -37,6 +39,7 @@ export function PianoKey({
   name,
   noteText,
   keyText,
+  marker,
   onDown,
   onEnter,
 }: Props) {
@@ -68,6 +71,7 @@ export function PianoKey({
       onPointerDown={down}
       onPointerEnter={(e) => onEnter(e.pointerId)}
     >
+      {marker && <span data-middle-c className="mb-1 size-2 rounded-full bg-current opacity-60" />}
       {noteText && <span className={highlight ? 'font-bold' : ''}>{noteText}</span>}
       {keyText && <span className="opacity-60">{keyText}</span>}
     </div>

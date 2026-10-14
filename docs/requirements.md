@@ -38,6 +38,7 @@ Out: external MIDI piano, narration, sustain pedal, goals/achievements/points, p
 - Input: mouse, touch (multi-touch), computer keyboard. Map by `KeyboardEvent.code` (physical key) so it works with a Hebrew layout; show the mapped key letter on each piano key (toggle).
 - Polyphony: several keys at once (chords); no pedal (D-72).
 - Volume slider + mute on the piano bar (D-14).
+- Middle C (C4) carries a small dot on its key for orientation **[REC]**.
 - Key highlight states: `target`, `correct`, `wrong`, `demo` (animated during demonstrations).
 - Phone in portrait on an exercise screen → overlay asking to rotate (D-71), with a "continue anyway" link.
 
@@ -58,7 +59,7 @@ Each exercise belongs to a lesson and to one **skill**: `keyboard`, `reading`, `
 - Unlimited retries (D-20). Every attempt is stored.
 - Feedback = key colour + short text + sound (D-19).
 - `press-key` (approved 14.10.2026): any octave of the named note counts. The first press of each question is what is scored; after a wrong press the question stays until the right key is pressed. Feedback sound = the pressed key's own note only (no extra effect).
-- `read-note` (approved 14.10.2026): only the exact pitch (octave) on the staff counts; the piano range is chosen so the staff range fits. Wrong-press rule as `press-key` (first press scored, question stays until correct). The Hebrew note name appears next to the staff note only after an answer: after a correct press, or after a wrong press together with a `target` highlight on the correct key.
+- `read-note` (approved 14.10.2026): only the exact pitch (octave) on the staff counts; the staff range is centred in the visible piano octaves (extra room below first) **[REC]**. Wrong-press rule as `press-key` (first press scored, question stays until correct). The Hebrew note name appears next to the staff note only after an answer: after a correct press, or after a wrong press together with a `target` highlight on the correct key.
 - Exercise components are pure: they receive the exercise definition + input events and emit an `AttemptResult`. Scoring logic lives in `src/engine/` with unit tests for every type.
 
 ## 7. Latency calibration (D-80)

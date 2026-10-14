@@ -8,6 +8,8 @@ import { PianoBar } from './PianoBar';
 import { PianoKey } from './PianoKey';
 import type { PianoProps } from './types';
 
+const MIDDLE_C: Midi = 60;
+
 /** On-screen piano (requirements §5): always LTR, plays its own sound, shows highlights. */
 export function Piano({
   input,
@@ -83,6 +85,7 @@ export function Piano({
             name={noteLabel(k.midi, { octave: true })}
             noteText={noteNames && noteLabel(k.midi, { naming: noteNames })}
             keyText={showKeyLetters ? keyLabelFor(k.midi, start) : undefined}
+            marker={k.midi === MIDDLE_C}
             onDown={(id) => input.pointerDown(id, k.midi)}
             onEnter={(id) => input.pointerEnter(id, k.midi)}
           />

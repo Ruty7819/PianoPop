@@ -46,9 +46,15 @@ describe('readNoteScore (set of 10, ≥ 80%)', () => {
 });
 
 describe('readNotePianoStart', () => {
-  it('starts at the C at or below the lowest question', () => {
-    expect(readNotePianoStart(Q)).toBe(60);
-    expect(readNotePianoStart([65, 79])).toBe(60);
-    expect(readNotePianoStart([59, 72])).toBe(48);
+  it('centres the question range in the visible octaves', () => {
+    // Q spans C4..C6 (2 octaves).
+    expect(readNotePianoStart(Q, 2)).toBe(60);
+    expect(readNotePianoStart(Q, 3)).toBe(48);
+    expect(readNotePianoStart(Q, 4)).toBe(48);
+    expect(readNotePianoStart([64, 67], 4)).toBe(36);
+  });
+
+  it('starts at the lowest question when the range is wider than the piano', () => {
+    expect(readNotePianoStart([59, 84], 2)).toBe(48);
   });
 });

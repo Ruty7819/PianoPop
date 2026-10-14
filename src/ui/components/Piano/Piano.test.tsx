@@ -71,3 +71,11 @@ describe('Piano', () => {
     expect(audio.setMuted).toHaveBeenLastCalledWith(true);
   });
 });
+
+describe('Piano middle C', () => {
+  it('marks only middle C', () => {
+    const { key } = setup();
+    expect(key(60).querySelector('[data-middle-c]')).toBeInTheDocument();
+    expect(document.querySelectorAll('[data-middle-c]')).toHaveLength(1);
+  });
+});

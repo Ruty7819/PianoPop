@@ -14,6 +14,7 @@ import type { PianoInput } from '../../services/input';
 import { FeedbackBanner } from '../components/FeedbackBanner';
 import { Piano, type KeyHighlight, type PianoAudio } from '../components/Piano';
 import { Staff, type StaffNote } from '../components/Staff';
+import { useDeviceOctaves } from '../hooks/useDeviceOctaves';
 import { ExerciseProgress } from './ExerciseProgress';
 import { ExerciseSummary } from './ExerciseSummary';
 import { useQuestionSet } from './useQuestionSet';
@@ -38,7 +39,9 @@ export function ReadNote({ def, input, audio, onDone, naming = 'solfege', octave
     RULES,
     onDone,
   );
-  const startMidi = useMemo(() => readNotePianoStart(def.questions), [def.questions]);
+  const deviceOctaves = useDeviceOctaves();
+  const oct = octaves ?? deviceOctaves;
+  const startMidi = useMemo(() => readNotePianoStart(def.questions, oct), [def.questions, oct]);
 
   // A correct press advances at once; keep the answered note on screen while it flashes.
   const answered = flash?.correct ? def.questions[state.index - 1] : undefined;
@@ -76,7 +79,8 @@ export function ReadNote({ def, input, audio, onDone, naming = 'solfege', octave
         input={input}
         audio={audio}
         highlights={highlights}
-        octaves={octaves}
+        key={startMidi}
+        octaves={oct}
         startMidi={startMidi}
       />
     </section>
