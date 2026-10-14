@@ -20,6 +20,8 @@ export const he = {
     start: 'התחילו',
     loading: 'טוענים צלילים…',
     blocked: 'הדפדפן חסם את הצליל. לחצו שוב על "התחילו".',
+    showNames: 'הצגה בשמות תווים',
+    showStaff: 'הצגה על חמשה',
   },
   exercise: {
     progress: (n: number, total: number) => `שאלה ${n} מתוך ${total}`,
@@ -41,6 +43,21 @@ export const he = {
   readNote: {
     title: 'קוראים תווים',
     prompt: 'לחצו על התו שעל החמשה',
+  },
+  playSequence: {
+    title: 'נגנו את הרצף',
+    prompt: 'נגנו את התווים לפי הסדר',
+    listen: 'השמיעו את הרצף',
+    sequence: 'הרצף',
+  },
+  higherLower: {
+    title: 'גבוה או נמוך',
+    prompt: 'איזה צליל גבוה יותר?',
+    first: 'הראשון',
+    second: 'השני',
+    listening: 'הקשיבו…',
+    answerFirst: 'הצליל הראשון היה גבוה יותר',
+    answerSecond: 'הצליל השני היה גבוה יותר',
   },
   notes: {
     solfege: ['דו', 'רה', 'מי', 'פה', 'סול', 'לה', 'סי'],

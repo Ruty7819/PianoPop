@@ -1,11 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  isReadNoteMatch,
-  readNoteAnswer,
-  readNotePianoStart,
-  readNoteScore,
-  readNoteStart,
-} from './readNote';
+import { isReadNoteMatch, readNoteAnswer, readNoteScore, readNoteStart } from './readNote';
 
 const Q = [64, 67, 71, 74, 77, 65, 69, 72, 76, 60];
 
@@ -42,19 +36,5 @@ describe('readNoteScore (set of 10, ≥ 80%)', () => {
   it('fails with 7 of 10', () => {
     const s = play([52, 64, 55, 67, 59, 71, ...Q.slice(3)]);
     expect(readNoteScore(s, 0)).toEqual({ rawScore: 70, score: 70, passed: false });
-  });
-});
-
-describe('readNotePianoStart', () => {
-  it('centres the question range in the visible octaves', () => {
-    // Q spans C4..C6 (2 octaves).
-    expect(readNotePianoStart(Q, 2)).toBe(60);
-    expect(readNotePianoStart(Q, 3)).toBe(48);
-    expect(readNotePianoStart(Q, 4)).toBe(48);
-    expect(readNotePianoStart([64, 67], 4)).toBe(36);
-  });
-
-  it('starts at the lowest question when the range is wider than the piano', () => {
-    expect(readNotePianoStart([59, 84], 2)).toBe(48);
   });
 });

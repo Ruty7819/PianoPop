@@ -37,5 +37,20 @@ export {
   readNoteDone,
   readNoteAnswer,
   readNoteScore,
-  readNotePianoStart,
 } from './readNote';
+export type { PlaySequenceState } from './playSequence';
+export {
+  playSequenceStart,
+  playSequenceDone,
+  playSequenceAnswer,
+  playSequenceScore,
+} from './playSequence';
+export type { HigherLowerState, PairChoice } from './higherLower';
+export {
+  higherLowerStart,
+  higherLowerDone,
+  higherLowerCorrect,
+  higherLowerAnswer,
+  higherLowerScore,
+} from './higherLower';
+export { pianoStartFor } from './pianoRange';

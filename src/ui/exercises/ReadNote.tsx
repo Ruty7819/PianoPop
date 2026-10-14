@@ -3,10 +3,13 @@ import type { ReadNoteDef } from '../../content';
 import {
   noteLabel,
   readNoteAnswer,
-  readNotePianoStart,
+  readNoteStart,
+  readNoteDone,
+  pianoStartFor,
   readNoteScore,
   type AttemptResult,
   type Midi,
+  type QuestionSetState,
   type NoteNaming,
 } from '../../engine';
 import { he } from '../../i18n/he';
@@ -17,9 +20,7 @@ import { Staff, type StaffNote } from '../components/Staff';
 import { useDeviceOctaves } from '../hooks/useDeviceOctaves';
 import { ExerciseProgress } from './ExerciseProgress';
 import { ExerciseSummary } from './ExerciseSummary';
-import { useQuestionSet } from './useQuestionSet';
-
-const RULES = { answer: readNoteAnswer, score: readNoteScore };
+import { usePianoAnswers } from './usePianoAnswers';
 
 interface Props {
   def: ReadNoteDef;
@@ -32,16 +33,19 @@ interface Props {
 
 /** "Read the note on the staff and play it" (requirements §6); rules in engine/readNote. */
 export function ReadNote({ def, input, audio, onDone, naming = 'solfege', octaves }: Props) {
-  const { state, flash, result, restart } = useQuestionSet(
-    def.id,
-    def.questions,
-    input,
-    RULES,
-    onDone,
+  const rules = useMemo(
+    () => ({
+      start: readNoteStart,
+      done: (s: QuestionSetState) => readNoteDone(s, def.questions),
+      answer: (s: QuestionSetState, m: Midi) => readNoteAnswer(s, def.questions, m),
+      score: readNoteScore,
+    }),
+    [def.questions],
   );
+  const { state, flash, result, restart } = usePianoAnswers(def.id, input, rules, onDone);
   const deviceOctaves = useDeviceOctaves();
   const oct = octaves ?? deviceOctaves;
-  const startMidi = useMemo(() => readNotePianoStart(def.questions, oct), [def.questions, oct]);
+  const startMidi = useMemo(() => pianoStartFor(def.questions, oct), [def.questions, oct]);
 
   // A correct press advances at once; keep the answered note on screen while it flashes.
   const answered = flash?.correct ? def.questions[state.index - 1] : undefined;

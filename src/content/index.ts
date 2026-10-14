@@ -5,6 +5,7 @@ export type {
   ExerciseType,
   PressKeyDef,
   PlaySequenceDef,
+  SequenceDisplay,
   ReadNoteDef,
   HigherLowerDef,
   TapRhythmDef,

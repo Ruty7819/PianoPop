@@ -16,7 +16,10 @@ export interface StaffProps {
 }
 
 /** Drawing geometry shared by drawStaff and the label overlay (SVG units). */
-export const STAFF_WIDTH = 260;
+/** Width grows with the note count so sequences stay readable. */
+export function staffWidth(noteCount: number): number {
+  return Math.max(260, 110 + 50 * noteCount);
+}
 export const STAFF_HEIGHT = 140;
 /** Y of the bottom staff line; one diatonic step = half a line space. */
 export const BOTTOM_LINE_Y = 90;

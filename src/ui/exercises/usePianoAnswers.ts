@@ -1,51 +1,46 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  questionSetDone,
-  questionSetStart,
-  type AttemptResult,
-  type Midi,
-  type QuestionSetState,
-  type ScoreResult,
-} from '../../engine';
+import type { AttemptResult, Midi, ScoreResult } from '../../engine';
 import type { PianoInput } from '../../services/input';
 
 const FLASH_MS = 700;
 
-export interface QuestionSetRules {
-  answer: (
-    state: QuestionSetState,
-    questions: readonly Midi[],
-    pressed: Midi,
-  ) => { state: QuestionSetState; correct: boolean };
-  score: (state: QuestionSetState, hintsUsed: number) => ScoreResult;
+interface AnswerState {
+  index: number;
+  results: boolean[];
 }
 
-/** Wires piano presses to a single-key question set; rules come from the engine. */
-export function useQuestionSet(
+/** Engine rules bound to one exercise; must be stable (useMemo / module constant). */
+export interface PianoAnswerRules<S extends AnswerState> {
+  start: () => S;
+  done: (state: S) => boolean;
+  answer: (state: S, pressed: Midi) => { state: S; correct: boolean };
+  score: (state: S, hintsUsed: number) => ScoreResult;
+}
+
+/** Wires piano presses to an exercise's engine rules; holds only transient UI state. */
+export function usePianoAnswers<S extends AnswerState>(
   exerciseId: string,
-  questions: readonly Midi[],
   input: PianoInput,
-  rules: QuestionSetRules,
+  rules: PianoAnswerRules<S>,
   onDone?: (result: AttemptResult) => void,
 ) {
-  const [state, setState] = useState(questionSetStart);
+  const [state, setState] = useState(rules.start);
   const [flash, setFlash] = useState<{ midi: Midi; correct: boolean } | null>(null);
   const [startedAt, setStartedAt] = useState(() => new Date().toISOString());
   const stateRef = useRef(state);
-  const done = questionSetDone(state, questions);
-  const { answer, score } = rules;
+  const done = rules.done(state);
 
   useEffect(
     () =>
       input.subscribe(({ midi, on }) => {
         if (!on) return;
-        const r = answer(stateRef.current, questions, midi);
+        const r = rules.answer(stateRef.current, midi);
         if (r.state === stateRef.current) return;
         stateRef.current = r.state;
         setState(r.state);
         setFlash({ midi, correct: r.correct });
       }),
-    [input, questions, answer],
+    [input, rules],
   );
 
   useEffect(() => {
@@ -60,13 +55,13 @@ export function useQuestionSet(
         ? {
             exerciseId,
             hintsUsed: 0,
-            ...score(state, 0),
+            ...rules.score(state, 0),
             details: { firstTry: state.results },
             startedAt,
             finishedAt: new Date().toISOString(),
           }
         : null,
-    [done, exerciseId, state, startedAt, score],
+    [done, exerciseId, state, startedAt, rules],
   );
 
   useEffect(() => {
@@ -74,7 +69,7 @@ export function useQuestionSet(
   }, [result, onDone]);
 
   const restart = () => {
-    stateRef.current = questionSetStart();
+    stateRef.current = rules.start();
     setState(stateRef.current);
     setFlash(null);
     setStartedAt(new Date().toISOString());

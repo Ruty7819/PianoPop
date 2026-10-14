@@ -1,6 +1,6 @@
 import { Accidental, Formatter, Renderer, Stave, StaveNote } from 'vexflow/bravura';
 import { spell, type Clef } from '../../../engine';
-import { BOTTOM_LINE_Y, STAFF_HEIGHT, STAFF_WIDTH, type StaffNote } from './types';
+import { BOTTOM_LINE_Y, STAFF_HEIGHT, staffWidth, type StaffNote } from './types';
 
 const ACC = { [-1]: 'b', 0: '', 1: '#' } as const;
 
@@ -10,15 +10,16 @@ const ACC = { [-1]: 'b', 0: '', 1: '#' } as const;
  * Returns each note head's x in SVG units.
  */
 export function drawStaff(el: HTMLElement, notes: readonly StaffNote[], clef: Clef): number[] {
+  const width = staffWidth(notes.length);
   el.replaceChildren();
   const renderer = new Renderer(el as HTMLDivElement, Renderer.Backends.SVG);
-  renderer.resize(STAFF_WIDTH, STAFF_HEIGHT);
+  renderer.resize(width, STAFF_HEIGHT);
   const ctx = renderer.getContext();
   ctx.setFillStyle('currentColor');
   ctx.setStrokeStyle('currentColor');
 
   // Stave top line sits 4 spaces (40px) below y; bottom line 40px further.
-  const stave = new Stave(0, BOTTOM_LINE_Y - 80, STAFF_WIDTH - 1);
+  const stave = new Stave(0, BOTTOM_LINE_Y - 80, width - 1);
   stave.addClef(clef).setContext(ctx).draw();
 
   const vfNotes = notes.map(({ midi }) => {
@@ -35,7 +36,7 @@ export function drawStaff(el: HTMLElement, notes: readonly StaffNote[], clef: Cl
 
   const svg = el.querySelector('svg');
   if (svg) {
-    svg.setAttribute('viewBox', `0 0 ${STAFF_WIDTH} ${STAFF_HEIGHT}`);
+    svg.setAttribute('viewBox', `0 0 ${width} ${STAFF_HEIGHT}`);
     svg.removeAttribute('width');
     svg.removeAttribute('height');
     svg.setAttribute('class', 'block h-auto w-full');

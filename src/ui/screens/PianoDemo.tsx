@@ -19,6 +19,12 @@ export function PianoDemo() {
       <Link className="ms-4 mt-4 inline-block text-muted underline" to="/demo/read-note">
         {he.readNote.title}
       </Link>
+      <Link className="ms-4 mt-4 inline-block text-muted underline" to="/demo/play-sequence">
+        {he.playSequence.title}
+      </Link>
+      <Link className="ms-4 mt-4 inline-block text-muted underline" to="/demo/higher-lower">
+        {he.higherLower.title}
+      </Link>
     </main>
   );
 }

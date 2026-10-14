@@ -12,9 +12,13 @@ export interface PressKeyDef extends ExerciseBase {
   type: 'press-key';
   questions: Midi[];
 }
+/** How a sequence is shown; sets the octave rule too (approved 14.10.2026). */
+export type SequenceDisplay = 'names' | 'staff';
+
 export interface PlaySequenceDef extends ExerciseBase {
   type: 'play-sequence';
   notes: Midi[];
+  show: SequenceDisplay;
 }
 export interface ReadNoteDef extends ExerciseBase {
   type: 'read-note';

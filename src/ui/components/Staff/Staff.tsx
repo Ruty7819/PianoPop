@@ -4,7 +4,7 @@ import { he } from '../../../i18n/he';
 import {
   BOTTOM_LINE_Y,
   STAFF_HEIGHT,
-  STAFF_WIDTH,
+  staffWidth,
   STEP_PX,
   type StaffProps,
   type StaffTone,
@@ -20,6 +20,7 @@ const TONE_TEXT = {
 export function Staff({ notes, clef = 'treble' }: StaffProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [xs, setXs] = useState<number[]>([]);
+  const width = staffWidth(notes.length);
   // Redraw only when what VexFlow draws changes, not on new array identity.
   const drawKey = notes.map((n) => `${n.midi}:${n.tone ?? ''}`).join(',');
 
@@ -48,12 +49,13 @@ export function Staff({ notes, clef = 'treble' }: StaffProps) {
       dir="ltr"
       role="img"
       aria-label={he.staff.label}
-      className="relative mx-auto w-full max-w-md text-ink"
+      className="relative mx-auto w-full text-ink"
+      style={{ maxWidth: `${width * 1.7}px` }}
     >
       <div
         ref={ref}
         className="[&_[data-tone=correct]]:text-correct [&_[data-tone=target]]:text-target [&_[data-tone=wrong]]:text-wrong"
-        style={{ aspectRatio: `${STAFF_WIDTH} / ${STAFF_HEIGHT}` }}
+        style={{ aspectRatio: `${width} / ${STAFF_HEIGHT}` }}
       />
       {notes.map((n, i) => {
         const x = xs[i];
@@ -65,7 +67,7 @@ export function Staff({ notes, clef = 'treble' }: StaffProps) {
             data-label-for={n.midi}
             className={`absolute -translate-y-1/2 text-xl font-bold ${n.tone ? TONE_TEXT[n.tone] : ''}`}
             style={{
-              left: `${((x + 24) / STAFF_WIDTH) * 100}%`,
+              left: `${((x + 24) / width) * 100}%`,
               top: `${(y / STAFF_HEIGHT) * 100}%`,
             }}
           >

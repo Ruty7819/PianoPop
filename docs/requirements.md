@@ -38,7 +38,7 @@ Out: external MIDI piano, narration, sustain pedal, goals/achievements/points, p
 - Input: mouse, touch (multi-touch), computer keyboard. Map by `KeyboardEvent.code` (physical key) so it works with a Hebrew layout; show the mapped key letter on each piano key (toggle).
 - Polyphony: several keys at once (chords); no pedal (D-72).
 - Volume slider + mute on the piano bar (D-14).
-- Middle C (C4) carries a small dot on its key for orientation **[REC]**.
+- Middle C (C4) carries a small dot on its key for orientation (approved 14.10.2026).
 - Key highlight states: `target`, `correct`, `wrong`, `demo` (animated during demonstrations).
 - Phone in portrait on an exercise screen → overlay asking to rotate (D-71), with a "continue anyway" link.
 
@@ -59,7 +59,9 @@ Each exercise belongs to a lesson and to one **skill**: `keyboard`, `reading`, `
 - Unlimited retries (D-20). Every attempt is stored.
 - Feedback = key colour + short text + sound (D-19).
 - `press-key` (approved 14.10.2026): any octave of the named note counts. The first press of each question is what is scored; after a wrong press the question stays until the right key is pressed. Feedback sound = the pressed key's own note only (no extra effect).
-- `read-note` (approved 14.10.2026): only the exact pitch (octave) on the staff counts; the staff range is centred in the visible piano octaves (extra room below first) **[REC]**. Wrong-press rule as `press-key` (first press scored, question stays until correct). The Hebrew note name appears next to the staff note only after an answer: after a correct press, or after a wrong press together with a `target` highlight on the correct key.
+- `read-note` (approved 14.10.2026): only the exact pitch (octave) on the staff counts; the staff range is centred in the visible piano octaves (extra room below first; approved 14.10.2026). Wrong-press rule as `press-key` (first press scored, question stays until correct). The Hebrew note name appears next to the staff note only after an answer: after a correct press, or after a wrong press together with a `target` highlight on the correct key.
+- `play-sequence` (approved 14.10.2026): each exercise's content sets how the sequence is shown — note names or notes on the staff. Only the first press of each note is scored; after a wrong press the learner stays on that note until it is right; score = % of notes right on the first try. Octave: staff → exact pitch; names → any octave, but once the first note is played the whole sequence must keep that same octave shift.
+- `higher-lower` (approved 14.10.2026): the two sounds play automatically; question "איזה צליל גבוה יותר?" with buttons "הראשון" / "השני". Every answer moves on; after a wrong answer the right one is shown first. No piano on screen. Replay only via the hint menu (D-23, ear).
 - Exercise components are pure: they receive the exercise definition + input events and emit an `AttemptResult`. Scoring logic lives in `src/engine/` with unit tests for every type.
 
 ## 7. Latency calibration (D-80)

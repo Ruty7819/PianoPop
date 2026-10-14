@@ -3,7 +3,7 @@
 Working document. Each task = one focused session. Update status here at the end of every task.
 Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner decision.
 
-**Current task:** M2.2
+**Current task:** M2.3
 
 ## How to run a task (token protocol)
 1. Read only: this file's current task + the doc sections it lists under **Refs**. Nothing else up front.
@@ -48,7 +48,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 
 ## M2 – Exercise engine
 - [x] **M2.1** `ui/components/Staff` (VexFlow, treble, highlight, Hebrew label overlay) + `ReadNote`.
-- [ ] **M2.2** `PlaySequence` + `HigherLower`.
+- [x] **M2.2** `PlaySequence` + `HigherLower`.
 - [ ] **M2.3** `engine/rhythm.ts` + tests; calibration wizard (`settingsStore.latencyOffsetMs`); `TapRhythm`.
 - [ ] **M2.4** `HintMenu` (short hint / explanation / replay demo; ear-exercise rule D-23) wired into scoring; demo playback animation.
   Done (M2): every type playable on the demo route; engine tests cover pass/fail edges and hint penalty.
@@ -94,3 +94,4 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 - 14.10.2026 — D.1: design direction chosen (B layout + A palette, no note colors, Varela Round); recorded in requirements §4.
 - 14.10.2026 — D.2: tokens in `src/index.css` (@theme), Varela Round self-hosted (@fontsource), base Button/Card/Dialog/ProgressBar; Piano, PressKey, AudioGate, FeedbackBanner restyled.
 - 14.10.2026 — M2.1: Staff (VexFlow 5 bravura, lazy chunk, currentColor + data-tone, HTML label overlay), engine/readNote (exact pitch) on shared engine/questionSet, ReadNote + useQuestionSet hook, /demo/read-note. read-note rules approved → requirements §6.
+- 14.10.2026 — M2.2: engine/playSequence (staff exact / names with fixed octave shift) + engine/higherLower; engine/pianoRange (centred range, middle-C dot approved); generic usePianoAnswers hook; PlaySequence (names chips or staff, free replay except ear), HigherLower (auto-play, no piano); /demo/play-sequence, /demo/higher-lower. Rules approved → requirements §6.
