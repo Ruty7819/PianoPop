@@ -6,4 +6,9 @@ export const he = {
     subtitle: 'לומדים פסנתר צעד אחר צעד',
   },
   notFound: 'העמוד לא נמצא',
+  notes: {
+    solfege: ['דו', 'רה', 'מי', 'פה', 'סול', 'לה', 'סי'],
+    sharp: '♯',
+    flat: '♭',
+  },
 } as const;

@@ -3,7 +3,7 @@
 Working document. Each task = one focused session. Update status here at the end of every task.
 Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner decision.
 
-**Current task:** M1.1
+**Current task:** M1.2
 
 ## How to run a task (token protocol)
 1. Read only: this file's current task + the doc sections it lists under **Refs**. Nothing else up front.
@@ -35,7 +35,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
   Done: CI green on push.
 
 ## M1 – Vertical slice: piano + sound + one exercise
-- [ ] **M1.1** `engine/notes.ts` (midi ↔ solfège/letters, staff position) + tests. Refs: requirements §4.
+- [x] **M1.1** `engine/notes.ts` (midi ↔ solfège/letters, staff position) + tests. Refs: requirements §4.
 - [ ] **M1.2** `services/audio` (Tone.js, start gate, sampler subset, `now()`); sample files in `public/samples/` with credit note. Refs: architecture §5.
 - [ ] **M1.3** `services/input` PianoInput: pointer + multi-touch + keyboard by `code`; events stamped with audio clock; tests with fake clock. Refs: requirements §5.
 - [ ] **M1.4** `ui/components/Piano`: LTR, responsive octaves (2/3/4), scroll, highlight states, key labels, volume/mute. Refs: requirements §5.
