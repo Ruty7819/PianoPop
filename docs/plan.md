@@ -3,7 +3,7 @@
 Working document. Each task = one focused session. Update status here at the end of every task.
 Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner decision.
 
-**Current task:** M1.4
+**Current task:** M1.5
 
 ## How to run a task (token protocol)
 1. Read only: this file's current task + the doc sections it lists under **Refs**. Nothing else up front.
@@ -38,7 +38,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 - [x] **M1.1** `engine/notes.ts` (midi ↔ solfège/letters, staff position) + tests. Refs: requirements §4.
 - [x] **M1.2** `services/audio` (Tone.js, start gate, sampler subset, `now()`); sample files in `public/samples/` with credit note. Refs: architecture §5.
 - [x] **M1.3** `services/input` PianoInput: pointer + multi-touch + keyboard by `code`; events stamped with audio clock; tests with fake clock. Refs: requirements §5.
-- [ ] **M1.4** `ui/components/Piano`: LTR, responsive octaves (2/3/4), scroll, highlight states, key labels, volume/mute. Refs: requirements §5.
+- [x] **M1.4** `ui/components/Piano`: LTR, responsive octaves (2/3/4), scroll, highlight states, key labels, volume/mute. Refs: requirements §5.
 - [ ] **M1.5** `engine/scoring.ts` (all thresholds + hint penalty, D-81) + tests; `PressKey` exercise + `FeedbackBanner`; temporary demo route.
   Done (M1): on a real phone and desktop, play notes (mouse/touch/keyboard, Hebrew layout), finish a 10-question press-key set with correct score. Owner checks audio latency feel.
 

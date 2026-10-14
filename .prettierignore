@@ -2,3 +2,5 @@ dist
 coverage
 docs/spec
 package-lock.json
+docs
+CLAUDE.md
