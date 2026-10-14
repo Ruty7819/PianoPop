@@ -56,6 +56,7 @@ Each exercise belongs to a lesson and to one **skill**: `keyboard`, `reading`, `
 - Hint types: `short-hint`, `explanation`, `replay-demo` (D-23). In `ear` exercises the demo replay is available only inside the hint menu and counts as a hint; elsewhere a replay button is always visible and free.
 - Unlimited retries (D-20). Every attempt is stored.
 - Feedback = key colour + short text + sound (D-19).
+- `press-key` (approved 14.10.2026): any octave of the named note counts. The first press of each question is what is scored; after a wrong press the question stays until the right key is pressed. Feedback sound = the pressed key's own note only (no extra effect).
 - Exercise components are pure: they receive the exercise definition + input events and emit an `AttemptResult`. Scoring logic lives in `src/engine/` with unit tests for every type.
 
 ## 7. Latency calibration (D-80)

@@ -10,3 +10,21 @@ export type {
   LabelOptions,
 } from './notes';
 export { isBlackKey, spell, toMidi, noteLabel, staffStep, ledgerLines } from './notes';
+export type { ScoreResult, AttemptResult } from './scoring';
+export {
+  PASS_THRESHOLD,
+  HINT_PENALTY,
+  MAX_PENALIZED_HINTS,
+  rawPercent,
+  applyHintPenalty,
+  isPassed,
+  scoreAttempt,
+} from './scoring';
+export type { PressKeyState } from './pressKey';
+export {
+  isPressKeyMatch,
+  pressKeyStart,
+  pressKeyDone,
+  pressKeyAnswer,
+  pressKeyScore,
+} from './pressKey';
