@@ -25,4 +25,5 @@ Never open: `docs/spec/*.docx`, `package-lock.json`, `dist/`, `public/samples/`,
 - Audio starts only after a user gesture; audio clock is the single time source.
 
 ## Commands
-(filled in M0.2)
+- `npm run dev` – dev server · `npm run check` – lint + typecheck + tests + build (CI runs the same)
+- `npx vitest run <file>` – one test file · `npm run format` – Prettier
