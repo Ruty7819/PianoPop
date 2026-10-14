@@ -113,7 +113,7 @@ Zustand (small, no boilerplate). Stores are thin: they call engine functions and
 React Router, routes per requirements §12, lazy-loaded screens. `AppShell` = header (logo, personal-area link) + main. Exercise screens use a focused layout (no header nav) to keep the UI calm.
 
 ## 9. Styling
-Tailwind with design tokens in `tailwind.config` (colors/fonts filled after design direction is chosen). RTL by default; `dir="ltr"` wrapper inside `Piano` and `Staff`. Respect `prefers-reduced-motion`.
+Tailwind v4: design tokens in `src/index.css` `@theme` (filled in plan task D.2). RTL by default; `dir="ltr"` wrapper inside `Piano` and `Staff`. Respect `prefers-reduced-motion`.
 
 ## 10. Testing
 - Unit (Vitest): all of `engine/`, content validation, repositories with fakes.

@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+/* Design tokens are filled in plan task D.2. */
+@theme {
+  --font-sans: system-ui, 'Segoe UI', Arial, sans-serif;
+}

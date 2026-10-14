@@ -3,7 +3,7 @@
 Working document. Each task = one focused session. Update status here at the end of every task.
 Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner decision.
 
-**Current task:** M0.1
+**Current task:** M0.2
 
 ## How to run a task (token protocol)
 1. Read only: this file's current task + the doc sections it lists under **Refs**. Nothing else up front.
@@ -29,7 +29,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 ---
 
 ## M0 – Setup
-- [ ] **M0.1** Vite + React + TS (strict) + Tailwind + React Router + Zustand; ESLint + Prettier; Vitest + RTL; `npm run check` script; `<html lang="he" dir="rtl">`; folder skeleton per architecture §2 with `index.ts` stubs; `src/i18n/he.ts`.
+- [x] **M0.1** Vite + React + TS (strict) + Tailwind + React Router + Zustand; ESLint + Prettier; Vitest + RTL; `npm run check` script; `<html lang="he" dir="rtl">`; folder skeleton per architecture §2 with `index.ts` stubs; `src/i18n/he.ts`.
   Refs: architecture §2, §9 · Done: dev server shows Hebrew RTL placeholder; `npm run check` green.
 - [ ] **M0.2** GitHub Actions CI running `npm ci && npm run check`; `.env.example`; fill CLAUDE.md "Commands".
   Done: CI green on push.
