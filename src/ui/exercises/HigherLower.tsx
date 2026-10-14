@@ -18,7 +18,6 @@ import { ExerciseProgress } from './ExerciseProgress';
 import { HL_TIMING } from './higherLowerTiming';
 import { ExerciseSummary } from './ExerciseSummary';
 
-
 interface Feedback {
   choice: PairChoice;
   correct: boolean;

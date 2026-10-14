@@ -54,3 +54,16 @@ export {
   higherLowerScore,
 } from './higherLower';
 export { pianoStartFor } from './pianoRange';
+export type { TapTiming, RhythmTimeline, BeatResult, RhythmJudgement } from './rhythm';
+export {
+  RHYTHM_WINDOW,
+  BEATS_PER_BAR,
+  CALIBRATION_TAPS,
+  LATE_TIP_MS,
+  tapTiming,
+  rhythmTimeline,
+  judgeTaps,
+  judgeTap,
+  rhythmScore,
+  calibrationOffsetMs,
+} from './rhythm';

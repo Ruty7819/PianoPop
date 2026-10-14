@@ -6,6 +6,7 @@ import { PressKeyDemo } from './ui/screens/PressKeyDemo';
 import { ReadNoteDemo } from './ui/screens/ReadNoteDemo';
 import { PlaySequenceDemo } from './ui/screens/PlaySequenceDemo';
 import { HigherLowerDemo } from './ui/screens/HigherLowerDemo';
+import { TapRhythmDemo } from './ui/screens/TapRhythmDemo';
 
 export const routes = [
   { path: '/', element: <Home /> },
@@ -14,6 +15,7 @@ export const routes = [
   { path: '/demo/read-note', element: <ReadNoteDemo /> },
   { path: '/demo/play-sequence', element: <PlaySequenceDemo /> },
   { path: '/demo/higher-lower', element: <HigherLowerDemo /> },
+  { path: '/demo/tap-rhythm', element: <TapRhythmDemo /> },
   { path: '*', element: <NotFound /> },
 ];
 
