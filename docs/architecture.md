@@ -26,7 +26,8 @@ src/
   i18n/he.ts
   content/
     types.ts            Unit, Lesson, Step, ExerciseDef, Skill, NoteName
-    units/u1.ts         unit 1 data
+    units/u1/index.ts   unit 1 meta + lesson list
+    units/u1/l1.ts      one file per lesson (cheap to read/edit)
     index.ts            course = [u1, ...]; lookup helpers (getLesson, getExercise)
     validate.test.ts    content integrity test
   engine/

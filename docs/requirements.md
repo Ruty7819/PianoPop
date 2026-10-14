@@ -52,7 +52,7 @@ Each exercise belongs to a lesson and to one **skill**: `keyboard`, `reading`, `
 | `tap-rhythm` | Tap along with a pattern | each tap vs beat after latency offset | ≥ 75% of taps within "good" window |
 
 - Rhythm windows **[REC]**: perfect ≤ ±90 ms, good ≤ ±180 ms; feedback "מוקדם / מדויק / מאוחר". Use the audio clock (`Tone.now()`) as the single time source; convert input timestamps to it.
-- Scoring: `score = max(0, raw% − 10 × min(hintsUsed, 3))` (D-60, D-81). Pass = `score ≥ threshold`. **[OPEN]** confirm the penalized score is the one compared to the threshold (assumed).
+- Scoring: `score = max(0, raw% − 10 × min(hintsUsed, 3))` (D-60, D-81). Pass = `score ≥ threshold` — the penalized score is the one compared (approved 14.10.2026).
 - Hint types: `short-hint`, `explanation`, `replay-demo` (D-23). In `ear` exercises the demo replay is available only inside the hint menu and counts as a hint; elsewhere a replay button is always visible and free.
 - Unlimited retries (D-20). Every attempt is stored.
 - Feedback = key colour + short text + sound (D-19).
@@ -125,14 +125,13 @@ Each milestone ends with: tests green, `npm run build` passes, commit + push.
 **M5 – Personal area**: overview, skills, active-time tracking, streak, chart, journal, history.
 ✔ Numbers match stored attempts in tests; day boundary uses Asia/Jerusalem.
 
-**M6 – Design & polish**: 2–3 design directions → owner picks (D-66); apply; landscape prompt; error states; legal/about pages (text drafts marked for legal review).
+**M6 – Polish** (design direction is chosen earlier, plan task D): landscape prompt; error states; legal/about pages (text drafts marked for legal review).
 ✔ Lighthouse accessibility ≥ 95 on main screens; keyboard-only run of a full lesson; tested on phone, tablet, desktop.
 
 **M7 – Launch**: Playwright flows, browser matrix check, Vercel + Supabase production, credits.
 ✔ Main flows pass in Playwright on Chromium/WebKit/Firefox; production URL works with Google login.
 
 ## 15. Open items
-- Penalized score vs threshold (see §6).
 - Learning preferences beyond explanation length / key labels (spec פ-01).
 - Domain vs free subdomain (פ-17). Name availability check for "PianoPop" (פ-16א).
 - Legal review: accessibility law applicability, privacy (Amendment 13), minors, music copyright (פ-12).

@@ -1,23 +1,28 @@
 # PianoPop
+Free Hebrew RTL piano-learning web app. Reply to the user in Hebrew.
 
-Free Hebrew (RTL) web app for learning piano. Full dev requirements: `docs/requirements.md`; code structure and layers: `docs/architecture.md` — read only the section you need. Product spec (human-facing, Word): `docs/spec/` — do not open the .docx unless asked; requirements.md already reflects it.
+## Start every session
+Read `docs/plan.md` → "Current task" + its Refs only. Other docs on demand, by section:
+- `docs/requirements.md` – what to build (decision ids D-xx)
+- `docs/architecture.md` – layers, folders, contracts
+Never open: `docs/spec/*.docx`, `package-lock.json`, `dist/`, `public/samples/`, `node_modules/`.
 
-## Working rules
-- Reply to the user in Hebrew.
-- Never decide product questions alone. If something isn't covered by requirements.md, ask; mark any suggestion as a recommendation until approved. Record approved decisions in requirements.md (and note them for the next spec version).
-- Work milestone by milestone (requirements.md §14). Finish = tests green + `npm run build` passes, then commit and push.
-- Commit small, descriptive messages in English. Push to `origin main` after each completed milestone or meaningful step.
-
-## Stack
-Vite + React + TypeScript (strict) · Tailwind · Supabase (Postgres, Google auth, RLS) · Tone.js · VexFlow · Vitest · Playwright · Vercel.
+## Rules
+- Product questions not answered in requirements.md → ask the owner, don't guess. Suggestions are labelled as such until approved; approved answers go into requirements.md.
+- One plan task per session. End: `npm run check` → commit → push → tick task in plan.md, set next "Current task".
+- Find before reading: Grep/Glob, then Read only the needed range. Don't reread a file after editing it.
+- Read a folder's `index.ts`/`types.ts` before any implementation file.
+- Files < 150 lines (max 250); split instead of growing.
+- Run single test files while working (`npx vitest run <file>`); full `npm run check` once at the end.
+- Keep replies short: what changed, what's next, any question.
 
 ## Code conventions
-- Code, identifiers and comments in English. All UI text in Hebrew, only in `src/i18n/he.ts`; plural addressing ("לחצו").
-- `<html dir="rtl">`; use logical Tailwind classes (`ms-`, `pe-`, `start-`). Piano and staff are always wrapped in `dir="ltr"`.
-- Keyboard input by `KeyboardEvent.code`, never `.key`.
-- Scoring/progress logic is pure TS in `src/engine/` with unit tests; components stay thin.
-- Content lives in `src/content/` as typed TS data; ids are stable and never renamed.
-- Audio only after a user gesture; one time source (audio clock) for rhythm.
+- English code/comments; all UI text in `src/i18n/he.ts` only, plural addressing ("לחצו").
+- `dir="rtl"` app; Piano and Staff wrapped in `dir="ltr"`. Tailwind logical classes (`ms-`, `pe-`, `start-`).
+- Keyboard input by `KeyboardEvent.code`.
+- Business rules only in `src/engine/` (pure TS, tested); components stay thin. Cite decision ids in comments where a rule comes from (`// D-58`).
+- Content ids are stable; never rename.
+- Audio starts only after a user gesture; audio clock is the single time source.
 
 ## Commands
-(fill in after M0 setup)
+(filled in M0.2)
