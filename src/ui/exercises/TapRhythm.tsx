@@ -21,6 +21,8 @@ import { RhythmBar } from './RhythmBar';
 import { TR_TIMING } from './tapRhythmTiming';
 import { RhythmStage, type RhythmPhase } from './RhythmStage';
 import { useAudioClock } from '../hooks/useAudioClock';
+import { useHints } from '../hooks/useHints';
+import { HintBar } from './HintBar';
 
 interface Props {
   def: TapRhythmDef;
@@ -37,6 +39,7 @@ export function TapRhythm({ def, audio, latencyOffsetMs, onDone }: Props) {
   const [judged, setJudged] = useState<RhythmJudgement | null>(null);
   const [startedAt, setStartedAt] = useState('');
   const taps = useRef<number[]>([]);
+  const hints = useHints(def.skill);
 
   const start = () => {
     const t = rhythmTimeline(def.bpm, def.pattern, audio.now() + TR_TIMING.lead);
@@ -82,14 +85,14 @@ export function TapRhythm({ def, audio, latencyOffsetMs, onDone }: Props) {
       judged
         ? {
             exerciseId: def.id,
-            hintsUsed: 0,
-            ...rhythmScore(judged, 0),
+            hintsUsed: hints.hintsUsed,
+            ...rhythmScore(judged, hints.hintsUsed),
             details: { ...judged, latencyOffsetMs },
             startedAt,
             finishedAt: new Date().toISOString(),
           }
         : null,
-    [judged, def.id, latencyOffsetMs, startedAt],
+    [judged, def.id, latencyOffsetMs, startedAt, hints.hintsUsed],
   );
 
   useEffect(() => {
@@ -100,6 +103,7 @@ export function TapRhythm({ def, audio, latencyOffsetMs, onDone }: Props) {
     setJudged(null);
     setTl(null);
     setPhase('ready');
+    hints.reset();
   };
   const bars = tl?.bars ?? rhythmTimeline(def.bpm, def.pattern, 0).bars;
   const tapping = phase === 'count' || phase === 'tap';
@@ -124,6 +128,15 @@ export function TapRhythm({ def, audio, latencyOffsetMs, onDone }: Props) {
             {he.tapRhythm.start}
           </Button>
         )
+      )}
+      {/* Hints only before a run, so the dialog never breaks the timing; the run itself demos first. */}
+      {phase === 'ready' && (
+        <HintBar
+          skill={def.skill}
+          short={he.hints.tapRhythm}
+          explanation={he.hints.explain['tap-rhythm']}
+          onHint={hints.use}
+        />
       )}
       {!result && <TapPad onTap={onTap} now={now} disabled={!tapping} />}
     </section>

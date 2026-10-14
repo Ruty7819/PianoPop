@@ -8,13 +8,16 @@ import {
   higherLowerStart,
   type AttemptResult,
   type HigherLowerState,
+  type HintType,
   type PairChoice,
 } from '../../engine';
 import { he } from '../../i18n/he';
 import type { AudioService } from '../../services/audio';
 import { Button } from '../components/Button';
 import { FeedbackBanner } from '../components/FeedbackBanner';
+import { useHints } from '../hooks/useHints';
 import { ExerciseProgress } from './ExerciseProgress';
+import { HintBar } from './HintBar';
 import { HL_TIMING } from './higherLowerTiming';
 import { ExerciseSummary } from './ExerciseSummary';
 
@@ -36,6 +39,8 @@ export function HigherLower({ def, audio, onDone }: Props) {
   const [listening, setListening] = useState(true);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [startedAt, setStartedAt] = useState(() => new Date().toISOString());
+  const [replays, setReplays] = useState(0);
+  const hints = useHints(def.skill);
   const pair = def.pairs[state.index];
   const done = higherLowerDone(state, def.pairs);
 
@@ -53,7 +58,7 @@ export function HigherLower({ def, audio, onDone }: Props) {
       clearTimeout(play);
       clearTimeout(ready);
     };
-  }, [pair, state.index, audio, startedAt]);
+  }, [pair, state.index, audio, startedAt, replays]);
 
   useEffect(() => {
     if (!feedback) return;
@@ -73,14 +78,14 @@ export function HigherLower({ def, audio, onDone }: Props) {
       done
         ? {
             exerciseId: def.id,
-            hintsUsed: 0,
-            ...higherLowerScore(state, 0),
+            hintsUsed: hints.hintsUsed,
+            ...higherLowerScore(state, hints.hintsUsed),
             details: { firstTry: state.results },
             startedAt,
             finishedAt: new Date().toISOString(),
           }
         : null,
-    [done, def.id, state, startedAt],
+    [done, def.id, state, startedAt, hints.hintsUsed],
   );
 
   useEffect(() => {
@@ -91,6 +96,7 @@ export function HigherLower({ def, audio, onDone }: Props) {
     const retry = () => {
       setState(higherLowerStart());
       setListening(true);
+      hints.reset();
       setStartedAt(new Date().toISOString());
     };
     return <ExerciseSummary result={result} onRetry={retry} />;
@@ -98,6 +104,13 @@ export function HigherLower({ def, audio, onDone }: Props) {
   if (!pair) return null;
 
   const right = higherLowerCorrect(pair);
+  // Ear exercise: the replay lives in the hint menu and counts (D-23).
+  const onHint = (type: HintType) => {
+    hints.use(type);
+    if (type !== 'replay-demo') return;
+    setListening(true);
+    setReplays((n) => n + 1);
+  };
   const choose = (choice: PairChoice) => {
     const r = higherLowerAnswer(state, def.pairs, choice);
     setFeedback({ choice, correct: r.correct, next: r.state });
@@ -139,6 +152,13 @@ export function HigherLower({ def, audio, onDone }: Props) {
             ? he.higherLower.listening
             : ' '}
       </FeedbackBanner>
+      <HintBar
+        skill={def.skill}
+        short={he.hints.higherLower}
+        explanation={he.hints.explain['higher-lower']}
+        onHint={onHint}
+        disabled={listening || !!feedback}
+      />
     </section>
   );
 }

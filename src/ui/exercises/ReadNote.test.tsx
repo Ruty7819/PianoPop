@@ -2,8 +2,8 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 import type { ReadNoteDef } from '../../content';
 import { he } from '../../i18n/he';
+import type { SequenceNote } from '../../services/audio';
 import { createPianoInput } from '../../services/input';
-import type { PianoAudio } from '../components/Piano';
 import { ReadNote } from './ReadNote';
 
 const QUESTIONS = [64, 67, 71, 74, 77, 65, 69, 72, 76, 62];
@@ -21,11 +21,13 @@ beforeAll(() => {
 
 function setup() {
   const input = createPianoInput(() => 0);
-  const audio: PianoAudio = {
+  const audio = {
     noteOn: vi.fn(),
     noteOff: vi.fn(),
     setVolume: vi.fn(),
     setMuted: vi.fn(),
+    playSequence: vi.fn<(notes: SequenceNote[], at?: number) => number>(() => 0),
+    now: () => 1,
   };
   const onDone = vi.fn();
   render(<ReadNote def={DEF} input={input} audio={audio} onDone={onDone} octaves={2} />);

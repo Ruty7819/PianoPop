@@ -7,28 +7,28 @@ import {
   playSequenceScore,
   playSequenceStart,
   type AttemptResult,
+  type HintType,
   type Midi,
   type NoteNaming,
   type PlaySequenceState,
 } from '../../engine';
 import { he } from '../../i18n/he';
-import type { AudioService } from '../../services/audio';
 import type { PianoInput } from '../../services/input';
-import { Button } from '../components/Button';
 import { FeedbackBanner } from '../components/FeedbackBanner';
+import { keyHint, staffHint } from '../components/HintMenu';
 import { Piano, type KeyHighlight, type PianoAudio } from '../components/Piano';
 import { Staff } from '../components/Staff';
+import { useDemoPlayback, type DemoAudio } from '../hooks/useDemoPlayback';
 import { useDeviceOctaves } from '../hooks/useDeviceOctaves';
 import { ExerciseSummary } from './ExerciseSummary';
+import { HintBar } from './HintBar';
 import { SequenceNames } from './SequenceNames';
 import { usePianoAnswers } from './usePianoAnswers';
-
-const STEP_S = 0.6;
 
 interface Props {
   def: PlaySequenceDef;
   input: PianoInput;
-  audio: PianoAudio & Pick<AudioService, 'playSequence' | 'now'>;
+  audio: PianoAudio & DemoAudio;
   onDone?: (result: AttemptResult) => void;
   naming?: NoteNaming;
   octaves?: number;
@@ -45,20 +45,31 @@ export function PlaySequence({ def, input, audio, onDone, naming = 'solfege', oc
     }),
     [def.notes, def.show],
   );
-  const { state, flash, result, restart } = usePianoAnswers(def.id, input, rules, onDone);
+  const { state, flash, result, restart, reveal, takeHint } = usePianoAnswers(
+    def,
+    input,
+    rules,
+    onDone,
+  );
+  const { demoMidi, play } = useDemoPlayback(audio);
   const deviceOctaves = useDeviceOctaves();
   const oct = octaves ?? deviceOctaves;
   const startMidi = useMemo(() => pianoStartFor(def.notes, oct), [def.notes, oct]);
 
-  const listen = () =>
-    audio.playSequence(
-      def.notes.map((midi, i) => ({ midi, at: i * STEP_S, dur: STEP_S * 0.9 })),
-      audio.now() + 0.05,
-    );
+  const current = def.notes[state.index];
+  const highlights: Partial<Record<Midi, KeyHighlight>> = {};
+  if (demoMidi !== null) highlights[demoMidi] = 'demo';
+  if (flash) highlights[flash.midi] = flash.correct ? 'correct' : 'wrong';
 
-  const highlights: Partial<Record<Midi, KeyHighlight>> = flash
-    ? { [flash.midi]: flash.correct ? 'correct' : 'wrong' }
-    : {};
+  // Ear: replay only from the menu, counted as a hint; else a free demo of the answer (D-23).
+  const onHint = (type: HintType) => {
+    takeHint(type);
+    if (type === 'replay-demo') play(def.notes);
+  };
+  const demo = () => {
+    reveal();
+    play(def.notes);
+  };
 
   return (
     <section className="flex flex-col gap-4">
@@ -77,15 +88,18 @@ export function PlaySequence({ def, input, audio, onDone, naming = 'solfege', oc
           ) : (
             <SequenceNames notes={def.notes} index={state.index} naming={naming} />
           )}
-          {/* Free replay outside ear exercises (D-23). */}
-          {def.skill !== 'ear' && (
-            <Button variant="pill" className="self-center" onClick={listen}>
-              {he.playSequence.listen}
-            </Button>
-          )}
           <FeedbackBanner tone={flash ? (flash.correct ? 'correct' : 'wrong') : 'neutral'}>
             {flash ? (flash.correct ? he.exercise.correct : he.exercise.wrong) : ' '}
           </FeedbackBanner>
+          {current !== undefined && (
+            <HintBar
+              skill={def.skill}
+              short={def.show === 'staff' ? staffHint(current) : keyHint(current, naming)}
+              explanation={he.hints.explain['play-sequence']}
+              onHint={onHint}
+              onDemo={demo}
+            />
+          )}
         </>
       )}
       <Piano

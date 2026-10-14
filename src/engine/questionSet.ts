@@ -43,6 +43,11 @@ export function questionSetAnswer(
   };
 }
 
+/** A demo shown before answering scores the current question as wrong (approved 14.10.2026). */
+export function questionSetReveal<S extends QuestionSetState>(state: S): S {
+  return state.missed ? state : { ...state, missed: true };
+}
+
 export function questionSetScore(
   type: ExerciseType,
   state: QuestionSetState,

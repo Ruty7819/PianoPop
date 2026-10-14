@@ -55,4 +55,20 @@ describe('HigherLower', () => {
     });
     expect(onDone.mock.calls[0]?.[0]).toMatchObject({ exerciseId: 'hl', score: 90, passed: true });
   });
+
+  it('replays the pair from the hint menu and counts it as a hint (D-23)', () => {
+    const { audio, btn, wait, onDone } = setup();
+    wait(LISTEN);
+    fireEvent.click(btn(he.hints.open));
+    fireEvent.click(btn(he.hints.types['replay-demo']));
+    expect(btn(he.higherLower.first)).toBeDisabled();
+    wait(LISTEN);
+    expect(audio.playNote.mock.calls.map((c) => c[0])).toEqual([72, 64, 72, 64]);
+    PAIRS.forEach((p) => {
+      fireEvent.click(btn(p[0] > p[1] ? he.higherLower.first : he.higherLower.second));
+      wait(HL_TIMING.correct);
+      wait(LISTEN);
+    });
+    expect(onDone.mock.calls[0]?.[0]).toMatchObject({ rawScore: 100, hintsUsed: 1, score: 90 });
+  });
 });

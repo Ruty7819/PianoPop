@@ -56,6 +56,7 @@ Each exercise belongs to a lesson and to one **skill**: `keyboard`, `reading`, `
 - Rhythm windows **[REC]**: perfect ≤ ±90 ms, good ≤ ±180 ms; feedback "מוקדם / מדויק / מאוחר". Use the audio clock (`Tone.now()`) as the single time source; convert input timestamps to it.
 - Scoring: `score = max(0, raw% − 10 × min(hintsUsed, 3))` (D-60, D-81). Pass = `score ≥ threshold` — the penalized score is the one compared (approved 14.10.2026).
 - Hint types: `short-hint`, `explanation`, `replay-demo` (D-23). In `ear` exercises the demo replay is available only inside the hint menu and counts as a hint; elsewhere a replay button is always visible and free.
+- Hint details (approved 14.10.2026): every hint opened from the menu counts as 1 (also reopening the same type). Short-hint and explanation texts are generic per exercise type (in `he.ts`, filled with the current note). In non-ear exercises the free replay-demo shows the current answer (sound + `demo` key highlight); if the current item is still unanswered it is scored as wrong. In `ear` exercises the hint-menu replay just replays the two sounds in the same order.
 - Unlimited retries (D-20). Every attempt is stored.
 - Feedback = key colour + short text + sound (D-19).
 - `press-key` (approved 14.10.2026): any octave of the named note counts. The first press of each question is what is scored; after a wrong press the question stays until the right key is pressed. Feedback sound = the pressed key's own note only (no extra effect).

@@ -48,16 +48,23 @@ describe('PlaySequence', () => {
     expect(steps()?.slice(0, 3)).toEqual(['done', 'done', 'current']);
   });
 
-  it('plays the sequence on demand (free outside ear exercises)', () => {
-    const { audio } = setup('names');
-    fireEvent.click(screen.getByRole('button', { name: he.playSequence.listen }));
+  it('free demo plays the sequence and scores the current note wrong', () => {
+    const { audio, press, onDone } = setup('names');
+    fireEvent.click(screen.getByRole('button', { name: he.hints.demo }));
     expect(audio.playSequence).toHaveBeenCalledOnce();
     expect(audio.playSequence.mock.calls[0]?.[0]).toHaveLength(5);
+    for (const n of NOTES) press(n);
+    expect(onDone.mock.calls[0]?.[0]).toMatchObject({ rawScore: 80, hintsUsed: 0 });
   });
 
-  it('hides the free replay in ear exercises (D-23)', () => {
-    setup('names', 'ear');
-    expect(screen.queryByRole('button', { name: he.playSequence.listen })).toBeNull();
+  it('in ear exercises the replay is only in the hint menu and counts (D-23)', () => {
+    const { audio, press, onDone } = setup('names', 'ear');
+    expect(screen.queryByRole('button', { name: he.hints.demo })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: he.hints.open }));
+    fireEvent.click(screen.getByRole('button', { name: he.hints.types['replay-demo'] }));
+    expect(audio.playSequence).toHaveBeenCalledOnce();
+    for (const n of NOTES) press(n);
+    expect(onDone.mock.calls[0]?.[0]).toMatchObject({ rawScore: 100, hintsUsed: 1, score: 90 });
   });
 
   it('on the staff needs the exact pitch and scores first tries', () => {

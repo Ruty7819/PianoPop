@@ -67,3 +67,6 @@ export {
   rhythmScore,
   calibrationOffsetMs,
 } from './rhythm';
+export { questionSetReveal } from './questionSet';
+export type { HintType, StaffPlace } from './hints';
+export { hintMenuTypes, countsAsHint, staffPlace } from './hints';

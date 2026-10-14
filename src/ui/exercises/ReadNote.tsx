@@ -15,17 +15,20 @@ import {
 import { he } from '../../i18n/he';
 import type { PianoInput } from '../../services/input';
 import { FeedbackBanner } from '../components/FeedbackBanner';
+import { staffHint } from '../components/HintMenu';
 import { Piano, type KeyHighlight, type PianoAudio } from '../components/Piano';
 import { Staff, type StaffNote } from '../components/Staff';
+import { useDemoPlayback, type DemoAudio } from '../hooks/useDemoPlayback';
 import { useDeviceOctaves } from '../hooks/useDeviceOctaves';
 import { ExerciseProgress } from './ExerciseProgress';
 import { ExerciseSummary } from './ExerciseSummary';
+import { HintBar } from './HintBar';
 import { usePianoAnswers } from './usePianoAnswers';
 
 interface Props {
   def: ReadNoteDef;
   input: PianoInput;
-  audio: PianoAudio;
+  audio: PianoAudio & DemoAudio;
   onDone?: (result: AttemptResult) => void;
   naming?: NoteNaming;
   octaves?: number;
@@ -42,14 +45,21 @@ export function ReadNote({ def, input, audio, onDone, naming = 'solfege', octave
     }),
     [def.questions],
   );
-  const { state, flash, result, restart } = usePianoAnswers(def.id, input, rules, onDone);
+  const { state, flash, result, restart, reveal, takeHint } = usePianoAnswers(
+    def,
+    input,
+    rules,
+    onDone,
+  );
+  const { demoMidi, play } = useDemoPlayback(audio);
   const deviceOctaves = useDeviceOctaves();
   const oct = octaves ?? deviceOctaves;
   const startMidi = useMemo(() => pianoStartFor(def.questions, oct), [def.questions, oct]);
 
   // A correct press advances at once; keep the answered note on screen while it flashes.
   const answered = flash?.correct ? def.questions[state.index - 1] : undefined;
-  const shown = answered ?? def.questions[state.index];
+  const current = def.questions[state.index];
+  const shown = answered ?? current;
 
   // Name appears only after an answer; a miss also marks the right key (approved 14.10.2026).
   const staffNote: StaffNote | undefined =
@@ -62,6 +72,7 @@ export function ReadNote({ def, input, audio, onDone, naming = 'solfege', octave
           : { midi: shown };
 
   const highlights: Partial<Record<Midi, KeyHighlight>> = {};
+  if (demoMidi !== null) highlights[demoMidi] = 'demo';
   if (state.missed && shown !== undefined) highlights[shown] = 'target';
   if (flash) highlights[flash.midi] = flash.correct ? 'correct' : 'wrong';
 
@@ -77,6 +88,18 @@ export function ReadNote({ def, input, audio, onDone, naming = 'solfege', octave
           <FeedbackBanner tone={flash ? (flash.correct ? 'correct' : 'wrong') : 'neutral'}>
             {flash ? (flash.correct ? he.exercise.correct : he.exercise.wrong) : ' '}
           </FeedbackBanner>
+          {current !== undefined && (
+            <HintBar
+              skill={def.skill}
+              short={staffHint(current, def.clef)}
+              explanation={he.hints.explain['read-note']}
+              onHint={takeHint}
+              onDemo={() => {
+                reveal();
+                play([current]);
+              }}
+            />
+          )}
         </>
       )}
       <Piano
