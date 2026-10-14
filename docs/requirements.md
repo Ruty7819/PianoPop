@@ -24,7 +24,7 @@ Out: external MIDI piano, narration, sustain pedal, goals/achievements/points, p
 - All UI text in Hebrew, plural addressing ("לחצו", "נגנו") (D-67). Warm, encouraging tone (D-77).
 - All UI strings live in `src/i18n/he.ts` (single file), never inline in components.
 - Piano keyboard and staff are always LTR (low notes on the left), wrapped in `dir="ltr"`.
-- Note names: solfège by default (דו רה מי פה סול לה סי), setting to switch to C D E (D-51). Spelling: פה, סול, סי; דיאז ♯, במול ♭, בקר ♮.
+- Note names: solfège by default (דו רה מי פה סול לה סי), setting to switch to C D E (D-51). Spelling: פה, סול, סי; דיאז ♯, במול ♭, בקר ♮. Key/label display uses the compact symbol form ("דו♯", "רה♭"), not the spelled-out word (approved 14.10.2026).
 - Audio starts only after a user gesture ("התחילו" button creates/resumes the AudioContext).
 - One primary action per screen; course map shows current + next unit, rest collapsed (D-79).
 - Explanations are skippable by everyone (D-21); skipping never skips exercises.
