@@ -82,6 +82,7 @@ interface ProgressRepository {
   reset(): Promise<void>;
 }
 ```
+Course shape: `Unit { lessons, summaryTest, placement: { exercise, completes: lessonId[] }[] }`; exercise ids `u1-l3-e2` (lesson), `u1-s1` (unit summary), `u1-p1` (placement) — checked by `content/validate.ts`.
 Thresholds and penalties live in one place: `engine/scoring.ts` constants (from requirements §6).
 
 ## 4. Exercise flow

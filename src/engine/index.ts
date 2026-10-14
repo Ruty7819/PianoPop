@@ -70,3 +70,24 @@ export {
 export { questionSetReveal } from './questionSet';
 export type { HintType, StaffPlace } from './hints';
 export { hintMenuTypes, countsAsHint, staffPlace } from './hints';
+export type { CompletionSource, CompletedLesson, UnitSummaryResult } from './progress';
+export {
+  isLessonComplete,
+  isLessonUnlocked,
+  nextLesson,
+  practiceExercises,
+  latestAttempts,
+  unitSummary,
+} from './progress';
+export type { MasteryLevel } from './mastery';
+export { SKILLS, MASTERY_WINDOW, skillMastery, allMastery, masteryLevel } from './mastery';
+export type { Recommendation } from './recommend';
+export { recommend } from './recommend';
+export type { PlacementState } from './placement';
+export {
+  placementItems,
+  placementStart,
+  placementCurrent,
+  placementAnswer,
+  placementExit,
+} from './placement';
