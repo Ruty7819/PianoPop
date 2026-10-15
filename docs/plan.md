@@ -3,7 +3,7 @@
 Working document. Each task = one focused session. Update status here at the end of every task.
 Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner decision.
 
-**Current task:** M3.2
+**Current task:** M3.3
 
 ## How to run a task (token protocol)
 1. Read only: this file's current task + the doc sections it lists under **Refs**. Nothing else up front.
@@ -55,7 +55,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 
 ## M3 – Course (guest mode)
 - [x] **M3.1** `content/types.ts` + `validate.test.ts`; `engine/progress.ts`, `mastery.ts`, `recommend.ts`, `placement.ts` + tests.
-- [ ] **M3.2** `services/storage`: `ProgressRepository` + `LocalRepository`; `progressStore`, `settingsStore`.
+- [x] **M3.2** `services/storage`: `ProgressRepository` + `LocalRepository`; `progressStore`, `settingsStore`.
 - [ ] **M3.3** Skill `add-lesson` (`.claude/skills/add-lesson/`): turns an approved lesson outline into a typed lesson file + validation run. Draft unit 1 outline (6 lessons) → **owner approval** (D-55).
 - [ ] **M3.4** Lesson files u1/l1–l6 via the skill.
 - [ ] **M3.5** Screens: Course map (current + next only, D-79), LessonPlayer (steps, skip explanation), LessonDone, unit summary test.

@@ -27,6 +27,7 @@ export {
   getLesson,
   getExercise,
   unitOfLesson,
+  lessonOfExercise,
 } from './lookup';
 export { validateCourse } from './validate';
 

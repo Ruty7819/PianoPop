@@ -10,3 +10,11 @@ export {
   keyLabelFor,
 } from './input';
 export type { NoteEvent, NoteListener, PianoInput } from './input';
+export { createLocalRepository, LOCAL_PROGRESS_KEY, DEFAULT_SETTINGS } from './storage';
+export type {
+  Settings,
+  StoredLesson,
+  ProgressSnapshot,
+  ExportBundle,
+  ProgressRepository,
+} from './storage';

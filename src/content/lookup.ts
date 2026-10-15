@@ -32,3 +32,8 @@ export function allExercises(course: Course): ExerciseDef[] {
 export function getExercise(course: Course, id: string): ExerciseDef | undefined {
   return allExercises(course).find((e) => e.id === id);
 }
+
+/** Lesson that contains the exercise; undefined for summary/placement exercises. */
+export function lessonOfExercise(course: Course, exerciseId: string): Lesson | undefined {
+  return allLessons(course).find((l) => lessonExercises(l).some((e) => e.id === exerciseId));
+}
