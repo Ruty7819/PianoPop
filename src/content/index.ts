@@ -1,5 +1,6 @@
 // Public API of src/content — see docs/architecture.md §2.
 import type { Course } from './types';
+import { u1 } from './units/u1';
 
 export type {
   Skill,
@@ -31,5 +32,5 @@ export {
 } from './lookup';
 export { validateCourse } from './validate';
 
-/** The course in learning order; units are added in M3.4. */
-export const course: Course = [];
+/** The course in learning order. */
+export const course: Course = [u1];
