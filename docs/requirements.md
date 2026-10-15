@@ -74,7 +74,7 @@ Approved 14.10.2026: when no offset is stored, the wizard opens automatically be
 - Content is TypeScript data files in `src/content/` (D-56), typed by `src/content/types.ts`, validated by a Vitest test (unique ids, every exercise has a valid type/skill, referenced notes exist).
 - Hierarchy: `Unit → Lesson → Step`. Step kinds: `explanation` (skippable), `demo`, `exercise`, `summary-exercise`.
 - Ids are stable strings (`u1`, `u1-l3`, `u1-l3-e2`) — progress data references them, never rename.
-- Unit 1 draft per spec rec R-03 (~6 lessons: keyboard layout; finding דו; דו-רה-מי; פה–סי; high vs low; pulse & first melody). Claude drafts, product owner approves (D-55). Melodies: public-domain / folk only.
+- Unit 1 draft per spec rec R-03 (~6 lessons: keyboard layout; finding דו; דו-רה-מי; פה–סי; high vs low; pulse & first melody). Claude drafts, product owner approves (D-55). Melodies: public-domain / folk only; prefer melodies known to Israeli children (e.g. "יונתן הקטן") when PD. Unit 1 outline approved 15.10.2026 (`docs/content/u1-outline.md`); no staff reading in unit 1.
 
 ## 9. Progress rules
 - Lesson unlocks only when the previous lesson is completed (D-9). Lesson completed = every exercise in it passed (D-58).
