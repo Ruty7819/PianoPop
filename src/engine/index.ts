@@ -91,3 +91,6 @@ export {
   placementAnswer,
   placementExit,
 } from './placement';
+export type { LessonStatus, UnitDisplay, MapUnit, DoneNext } from './courseMap';
+export { isSummaryOpen, canOpenLesson, courseMap, lessonDoneNext } from './courseMap';
+export { canLeaveStep, skipToExercise } from './lessonFlow';

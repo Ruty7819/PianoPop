@@ -3,6 +3,7 @@ import { he } from '../../i18n/he';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { FeedbackBanner } from '../components/FeedbackBanner';
+import { useContinue } from './continueContext';
 
 export function ExerciseSummary({
   result,
@@ -11,6 +12,8 @@ export function ExerciseSummary({
   result: AttemptResult;
   onRetry: () => void;
 }) {
+  const flow = useContinue();
+  const canContinue = flow !== null && (result.passed || !flow.requirePass);
   return (
     <Card className="justify-items-center text-center">
       <FeedbackBanner tone={result.passed ? 'correct' : 'wrong'}>
@@ -25,9 +28,16 @@ export function ExerciseSummary({
           )}
         </p>
       )}
-      <Button variant="primary" onClick={onRetry}>
-        {he.exercise.retry}
-      </Button>
+      <div className="flex flex-wrap justify-center gap-3">
+        {canContinue && (
+          <Button variant="primary" onClick={flow?.onContinue}>
+            {he.exercise.continue}
+          </Button>
+        )}
+        <Button variant={canContinue ? 'secondary' : 'primary'} onClick={onRetry}>
+          {he.exercise.retry}
+        </Button>
+      </div>
     </Card>
   );
 }

@@ -1,5 +1,9 @@
 import { createBrowserRouter } from 'react-router';
 import { Home } from './ui/screens/Home';
+import { CourseMap } from './ui/screens/course/CourseMap';
+import { LessonPlayer } from './ui/screens/lesson/LessonPlayer';
+import { LessonDone } from './ui/screens/lesson/LessonDone';
+import { UnitTest } from './ui/screens/UnitTest';
 import { NotFound } from './ui/screens/NotFound';
 import { PianoDemo } from './ui/screens/PianoDemo';
 import { PressKeyDemo } from './ui/screens/PressKeyDemo';
@@ -10,6 +14,10 @@ import { TapRhythmDemo } from './ui/screens/TapRhythmDemo';
 
 export const routes = [
   { path: '/', element: <Home /> },
+  { path: '/course', element: <CourseMap /> },
+  { path: '/lesson/:lessonId', element: <LessonPlayer /> },
+  { path: '/lesson/:lessonId/done', element: <LessonDone /> },
+  { path: '/unit/:unitId/test', element: <UnitTest /> },
   { path: '/demo', element: <PianoDemo /> },
   { path: '/demo/press-key', element: <PressKeyDemo /> },
   { path: '/demo/read-note', element: <ReadNoteDemo /> },

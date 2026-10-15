@@ -80,6 +80,7 @@ Approved 14.10.2026: when no offset is stored, the wizard opens automatically be
 - Lesson unlocks only when the previous lesson is completed (D-9). Lesson completed = every exercise in it passed (D-58).
 - Skill mastery % = mean of the last 3 attempt scores across that skill's exercises (D-59). Levels: 0–59 "בתחילת הדרך", 60–84 "מתקדמים", 85–100 "שליטה טובה" (D-81).
 - Unit summary test: assessment only, does not gate (D-61).
+- Lesson player (approved 15.10.2026): a failed exercise must be retried until passed before moving on (retry or leave to the map; no "continue"). Completed lessons stay open on the course map (✓) and can be replayed. Lesson-done screen: congrats + score per exercise + primary "next lesson" (last lesson of a unit: "summary test") + secondary "course map". Unit summary test opens from a card on the course map once all lessons of the unit are completed, and is offered on the last lesson's done screen; failing a summary exercise does not block continuing.
 - Placement test (D-82): optional on first visit; one short exercise per lesson of unit 1 in increasing difficulty; each pass marks that lesson completed (source `placement`); stops at first fail; can exit anytime. Built generically so it will unlock whole units later.
 - Free practice only for already-learned lessons (D-48). Review only when the user chooses (D-28).
 - "Recommended next" (D-75): next incomplete lesson; if all done, an exercise from the weakest skill. Shown as a suggestion, user may ignore (D-31).
@@ -108,7 +109,7 @@ Approved 14.10.2026: when no offset is stored, the wizard opens automatically be
 - Weekly bar chart of active minutes, monthly toggle; activity journal (date, duration, lessons/exercises, results); attempt history list (D-32, D-33, D-35).
 
 ## 12. Screens & routes (D-68)
-`/` home · `/start` first visit (start audio → short intro → offer placement) · `/placement` · `/course` map · `/lesson/:lessonId` lesson player (steps incl. exercises) · `/lesson/:lessonId/done` · `/practice` free practice · `/me` personal area · `/settings` (note names, calibration, learning preferences, D-69) · `/login` · `/account` (export, delete, reset) · `/about` (+ credits) · `/terms` · `/privacy` · `/accessibility`.
+`/` home · `/start` first visit (start audio → short intro → offer placement) · `/placement` · `/course` map · `/lesson/:lessonId` lesson player (steps incl. exercises) · `/lesson/:lessonId/done` · `/unit/:unitId/test` unit summary test · `/practice` free practice · `/me` personal area · `/settings` (note names, calibration, learning preferences, D-69) · `/login` · `/account` (export, delete, reset) · `/about` (+ credits) · `/terms` · `/privacy` · `/accessibility`.
 
 ## 13. Error states
 No audio / audio blocked → visible "הפעילו צליל" prompt. Offline → banner; guest data keeps working locally; logged-in writes queued and retried. Login failed (incl. Family Link denial) → friendly Hebrew message + continue as guest. Supabase paused/unavailable → app usable in guest mode.
