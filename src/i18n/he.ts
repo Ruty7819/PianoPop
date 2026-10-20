@@ -55,6 +55,7 @@ export const he = {
     back: 'חזרה לרשימה',
   },
   notFound: 'העמוד לא נמצא',
+  nav: { home: 'לדף הבית' },
   piano: {
     keyboard: 'מקלדת פסנתר',
     volume: 'עוצמת קול',

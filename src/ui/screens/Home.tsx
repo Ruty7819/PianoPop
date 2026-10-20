@@ -5,7 +5,7 @@ import { he } from '../../i18n/he';
 import { useOnboardingStore } from '../../state';
 import { Button } from '../components/Button';
 import { useProgress } from '../hooks/useProgress';
-import { LessonPath } from './home/LessonPath';
+import { LessonPath } from '../components/LessonPath';
 
 /** `/`: current unit path + "recommended next" as a suggestion (D-75, D-31). */
 export function Home() {

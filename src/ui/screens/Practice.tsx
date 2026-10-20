@@ -9,6 +9,9 @@ import { Card } from '../components/Card';
 import { ContinueContext } from '../exercises/continueContext';
 import { ExerciseView } from '../exercises/ExerciseView';
 import { useProgress } from '../hooks/useProgress';
+import { ExerciseTile } from './practice/ExerciseTile';
+
+const NAV = 'rounded-2xl border-2 border-line bg-surface px-4 py-2 font-medium';
 
 /** `/practice[?exercise=id]`: exercises of learned lessons only (D-48), chosen by the user (D-28). */
 export function Practice() {
@@ -22,42 +25,50 @@ export function Practice() {
   const def = practiceExercises(course, completed).find((e) => e.id === wanted);
   const lessons = practiceLessons(course, completed);
 
-  return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-4 p-4">
-      <header className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold">{he.practice.title}</h1>
-        {def && (
+  if (def) {
+    return (
+      <main className="mx-auto flex max-w-6xl flex-col gap-4 p-4">
+        <header className="flex items-center justify-between gap-3">
+          <h1 className="text-2xl">{he.exerciseTypes[def.type]}</h1>
           <Button variant="pill" onClick={() => open()}>
             {he.practice.back}
           </Button>
-        )}
-      </header>
-      {def ? (
+        </header>
         <AudioGate audio={audio}>
           <ContinueContext.Provider value={{ onContinue: () => open(), requirePass: false }}>
             <ExerciseView key={def.id} def={def} onDone={(r) => void recordAttempt(r)} />
           </ContinueContext.Provider>
         </AudioGate>
-      ) : lessons.length === 0 ? (
-        <Card>
-          <p>{he.practice.empty}</p>
-          <Link to="/course" className="font-bold underline">
+      </main>
+    );
+  }
+
+  return (
+    <main className="mx-auto grid max-w-xl gap-5 p-4 sm:p-6">
+      <header className="flex items-center justify-between gap-3">
+        <h1 className="text-3xl text-primary">{he.practice.title}</h1>
+        <Link to="/" className={NAV}>
+          {he.nav.home}
+        </Link>
+      </header>
+      {lessons.length === 0 ? (
+        <Card className="justify-items-center text-center">
+          <p className="text-lg">{he.practice.empty}</p>
+          <Button variant="primary" onClick={() => void navigate('/course')}>
             {he.course.toCourse}
-          </Link>
+          </Button>
         </Card>
       ) : (
         <>
           <p className="text-muted">{he.practice.pick}</p>
           {lessons.map((lesson) => (
             <Card key={lesson.id}>
-              <h2 className="text-xl font-bold">
+              <h2 className="text-xl">
                 {he.course.lessonTitle(lessonNumber(course, lesson.id), lesson.title)}
               </h2>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 {lessonExercises(lesson).map((e) => (
-                  <Button key={e.id} onClick={() => open(e.id)}>
-                    {he.exerciseTypes[e.type]}
-                  </Button>
+                  <ExerciseTile key={e.id} type={e.type} onClick={() => open(e.id)} />
                 ))}
               </div>
             </Card>

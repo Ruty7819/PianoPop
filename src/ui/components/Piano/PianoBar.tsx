@@ -1,4 +1,5 @@
 import { he } from '../../../i18n/he';
+import { BarIcon } from './BarIcon';
 
 interface Props {
   volume: number;
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const btn =
-  'min-h-11 min-w-11 rounded-full border-2 border-line bg-surface px-2 text-muted hover:bg-canvas disabled:opacity-40';
+  'inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border-2 border-line bg-surface px-2 text-muted hover:bg-canvas disabled:opacity-40';
 
 /** Range arrows, volume + mute (D-14), key-letter toggle. Rendered LTR with the piano. */
 export function PianoBar(p: Props) {
@@ -26,7 +27,7 @@ export function PianoBar(p: Props) {
         disabled={!p.canLower}
         onClick={() => p.onShift(-1)}
       >
-        ◀
+        <BarIcon name="lower" />
       </button>
       <button
         type="button"
@@ -35,7 +36,7 @@ export function PianoBar(p: Props) {
         disabled={!p.canHigher}
         onClick={() => p.onShift(1)}
       >
-        ▶
+        <BarIcon name="higher" />
       </button>
       <button
         type="button"
@@ -44,7 +45,7 @@ export function PianoBar(p: Props) {
         aria-pressed={p.muted}
         onClick={() => p.onMuted(!p.muted)}
       >
-        {p.muted ? '🔇' : '🔊'}
+        <BarIcon name={p.muted ? 'muted' : 'sound'} />
       </button>
       <input
         type="range"
