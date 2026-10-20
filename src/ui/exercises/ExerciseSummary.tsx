@@ -34,9 +34,11 @@ export function ExerciseSummary({
             {he.exercise.continue}
           </Button>
         )}
-        <Button variant={canContinue ? 'secondary' : 'primary'} onClick={onRetry}>
-          {he.exercise.retry}
-        </Button>
+        {flow?.allowRetry !== false && (
+          <Button variant={canContinue ? 'secondary' : 'primary'} onClick={onRetry}>
+            {he.exercise.retry}
+          </Button>
+        )}
       </div>
     </Card>
   );

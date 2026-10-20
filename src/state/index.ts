@@ -4,3 +4,5 @@ export { useSettingsStore } from './settingsStore';
 export type { ProgressState } from './progressStore';
 export { useProgressStore, completedIds } from './progressStore';
 export { getDeps, setDeps } from './deps';
+export type { OnboardingState } from './onboardingStore';
+export { useOnboardingStore } from './onboardingStore';

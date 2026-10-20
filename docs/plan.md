@@ -3,7 +3,7 @@
 Working document. Each task = one focused session. Update status here at the end of every task.
 Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner decision.
 
-**Current task:** M3.6
+**Current task:** M4.0
 
 ## How to run a task (token protocol)
 1. Read only: this file's current task + the doc sections it lists under **Refs**. Nothing else up front.
@@ -59,7 +59,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 - [x] **M3.3** Skill `add-lesson` (`.claude/skills/add-lesson/`): turns an approved lesson outline into a typed lesson file + validation run. Draft unit 1 outline (6 lessons) → **owner approval** (D-55).
 - [x] **M3.4** Lesson files u1/l1–l6 via the skill.
 - [x] **M3.5** Screens: Course map (current + next only, D-79), LessonPlayer (steps, skip explanation), LessonDone, unit summary test.
-- [ ] **M3.6** Start (first visit) + Placement + Practice (learned lessons only) + recommendation on Home.
+- [x] **M3.6** Start (first visit) + Placement + Practice (learned lessons only) + recommendation on Home.
   Done (M3): new guest finishes unit 1 end-to-end; locks enforced; placement works.
 
 ## M4 – Accounts (Supabase)

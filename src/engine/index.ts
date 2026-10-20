@@ -94,3 +94,4 @@ export {
 export type { LessonStatus, UnitDisplay, MapUnit, DoneNext } from './courseMap';
 export { isSummaryOpen, canOpenLesson, courseMap, lessonDoneNext } from './courseMap';
 export { canLeaveStep, skipToExercise } from './lessonFlow';
+export { needsStart, practiceLessons, lessonNumber } from './onboarding';
