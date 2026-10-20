@@ -45,6 +45,7 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done · `[?]` blocked on owner 
 ## D – Design direction (owner decision)
 - [x] **D.1** Build 2–3 static design directions (home + exercise screen) as one HTML artifact; owner picks. Refs: requirements §4, D-40, D-66, D-79.
 - [x] **D.2** Encode the chosen direction as Tailwind tokens + base components (Button, Card, Dialog, ProgressBar). Restyle Piano/PressKey.
+- [x] **D.3** Owner asked for a real redesign (20.10.2026): 3 new directions on a canvas, owner picked "C"; tokens, base components, piano and Home path restyled.
 
 ## M2 – Exercise engine
 - [x] **M2.1** `ui/components/Staff` (VexFlow, treble, highlight, Hebrew label overlay) + `ReadNote`.

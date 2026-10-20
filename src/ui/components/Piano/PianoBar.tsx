@@ -13,7 +13,7 @@ interface Props {
 }
 
 const btn =
-  'min-h-11 min-w-11 rounded-full bg-surface px-2 text-muted hover:bg-line/50 disabled:opacity-40';
+  'min-h-11 min-w-11 rounded-full border-2 border-line bg-surface px-2 text-muted hover:bg-canvas disabled:opacity-40';
 
 /** Range arrows, volume + mute (D-14), key-letter toggle. Rendered LTR with the piano. */
 export function PianoBar(p: Props) {
@@ -53,13 +53,13 @@ export function PianoBar(p: Props) {
         step={0.05}
         value={p.volume}
         aria-label={he.piano.volume}
-        className="h-11 w-28 accent-ink"
+        className="h-11 w-28 accent-primary"
         onChange={(e) => p.onVolume(Number(e.target.value))}
       />
       <label className="ms-auto flex min-h-11 items-center gap-2" dir="rtl">
         <input
           type="checkbox"
-          className="size-5 accent-ink"
+          className="size-5 accent-primary"
           checked={p.showKeyLetters}
           onChange={(e) => p.onShowKeyLetters(e.target.checked)}
         />

@@ -130,6 +130,8 @@ describe('home recommendation (D-75)', () => {
     useProgressStore.setState({ loaded: false });
     useOnboardingStore.setState({ startSeen: true });
     render(<RouterProvider router={createMemoryRouter(routes)} />);
-    expect(await screen.findByText(he.home.practiceSkill(he.skills.rhythm))).toBeVisible();
+    expect(
+      await screen.findByText(he.home.practiceSkill(he.skills.rhythm), { exact: false }),
+    ).toBeVisible();
   });
 });

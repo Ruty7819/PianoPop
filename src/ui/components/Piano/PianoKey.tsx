@@ -17,19 +17,19 @@ interface Props {
 }
 
 const WHITE: Record<KeyHighlight | 'none', string> = {
-  none: 'bg-[#fbfbfc] text-muted',
-  target: 'bg-target text-ink',
-  correct: 'bg-correct text-surface',
-  wrong: 'bg-wrong text-surface',
-  demo: 'bg-demo text-ink motion-safe:animate-pulse',
+  none: 'bg-surface text-muted border-line',
+  target: 'bg-primary-soft text-primary-dark border-primary',
+  correct: 'bg-correct text-white border-correct',
+  wrong: 'bg-wrong text-white border-wrong',
+  demo: 'bg-demo text-white border-demo motion-safe:animate-pulse',
 };
 
 const BLACK: Record<KeyHighlight | 'none', string> = {
-  none: 'bg-ink text-surface',
-  target: 'bg-target text-ink',
-  correct: 'bg-correct text-surface',
-  wrong: 'bg-wrong text-surface',
-  demo: 'bg-demo text-ink motion-safe:animate-pulse',
+  none: 'bg-ink text-white border-ink',
+  target: 'bg-primary-soft text-primary-dark border-primary',
+  correct: 'bg-correct text-white border-correct',
+  wrong: 'bg-wrong text-white border-wrong',
+  demo: 'bg-demo text-white border-demo motion-safe:animate-pulse',
 };
 
 export function PianoKey({
@@ -47,8 +47,8 @@ export function PianoKey({
   const color = (black ? BLACK : WHITE)[highlight ?? 'none'];
   const pressedCls = pressed ? (black ? 'brightness-150' : 'brightness-90') : '';
   const shape = black
-    ? 'z-10 h-[58%] rounded-b-md ring-1 ring-ink'
-    : 'h-full rounded-b-key border-x border-ink shadow-[inset_0_-3px_0_rgb(0_0_0/0.08)]';
+    ? 'z-10 h-[58%] rounded-b-lg border-2 border-b-4'
+    : 'h-full rounded-b-key border-2 border-b-7 text-sm';
 
   const down = (e: PointerEvent<HTMLDivElement>) => {
     e.preventDefault();

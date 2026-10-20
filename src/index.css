@@ -1,32 +1,47 @@
 @import 'tailwindcss';
 
-/* Design tokens — direction approved in plan D.1 (requirements §4). */
+/* Design tokens — direction "C" (playful & modern), approved 20.10.2026 (requirements §4). */
 @theme {
-  --font-sans: 'Varela Round', 'Rubik', Arial, sans-serif;
+  --font-sans: 'Rubik', Arial, sans-serif;
+  --font-display: 'Secular One', 'Rubik', Arial, sans-serif;
 
-  --color-ink: #1c2742;
-  --color-muted: #5d6680;
-  --color-canvas: #f6f7f9;
+  --color-ink: #22184a;
+  --color-muted: #5e5683;
+  --color-canvas: #f6f4ff;
   --color-surface: #ffffff;
-  --color-line: #d5dae4;
+  --color-line: #e4e1f0;
+
+  --color-primary: #5b3fd9;
+  --color-primary-dark: #3b24a6;
+  --color-primary-soft: #dcd4ff;
+  --color-mint: #2fcb8a;
+  --color-mint-dark: #1e9a67;
+  --color-mint-soft: #ddf7ea;
+  --color-locked: #c8c3dc;
 
   /* Key / feedback states (no per-note colors). */
-  --color-target: #c99a2e;
-  --color-correct: #2d7a57;
-  --color-correct-text: #22603f;
-  --color-wrong: #b8463c;
-  --color-wrong-text: #9a3a31;
-  --color-demo: #6f8fd0;
+  --color-target: #5b3fd9;
+  --color-correct: #178556;
+  --color-correct-text: #136b45;
+  --color-wrong: #d12a63;
+  --color-wrong-text: #a81d4d;
+  --color-demo: #2f8fe0;
 
-  --radius-card: 18px;
-  --radius-key: 10px;
+  --radius-card: 24px;
+  --radius-key: 14px;
 }
 
 @layer base {
   body {
     @apply bg-canvas font-sans text-ink antialiased;
   }
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-synthesis: none;
+  }
   :focus-visible {
-    @apply outline-3 outline-offset-2 outline-ink;
+    @apply outline-3 outline-offset-2 outline-primary;
   }
 }
